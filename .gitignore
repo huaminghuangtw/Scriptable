@@ -1,0 +1,6 @@
+# Ignore all dot files
+.*
+
+# Exception
+!.gitignore
+!.github
