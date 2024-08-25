@@ -9,15 +9,15 @@ widget.useDefaultPadding();
 
 let quote = await fetchQuote();
 
-let q = widget.addText("“ " + quote.q + " „");
+let q = widget.addText(quote.q);
 q.centerAlignText();
 q.textColor = new Color("#ffffff");
 // http://iosfonts.com
-q.font = new Font("Palatino-BoldItalic", 16);
+q.font = new Font("AvenirNext-MediumItalic", 16);
 q.minimumScaleFactor = 0.1;
 q.textOpacity = 1;
 
-widget.addSpacer(7);
+widget.addSpacer(8);
 
 let a = widget.addText(quote.a);
 a.centerAlignText();
@@ -32,7 +32,7 @@ widget.url = "shortcuts://run-shortcut?" +
                 "input=" + encodeURI("\"" + quote.q + "\" — " + quote.a);
 
 let date = new Date();
-date.setHours(date.getMinutes() + 30);
+date.setMinutes(date.getMinutes() + 30);
 widget.refreshAfterDate = date;
 
 if (config.runsInWidget) {

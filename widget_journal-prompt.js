@@ -7,11 +7,11 @@ widget.backgroundColor = new Color("#000000");
 
 widget.useDefaultPadding();
 
-let journalPrompt = widget.addText("❝ What is the 2-minute version of the task I am avoiding? ❞");
+let journalPrompt = widget.addText("❝ Would I still be interested in learning this thing if cannot tell anyone about it? ❞");
 journalPrompt.centerAlignText();
 journalPrompt.textColor = new Color("#ffffff");
 // http://iosfonts.com
-journalPrompt.font = new Font("Avenir-BookOblique", 20);
+journalPrompt.font = new Font("AvenirNext-MediumItalic", 20);
 journalPrompt.minimumScaleFactor = 0.1;
 journalPrompt.textOpacity = 1;
 
