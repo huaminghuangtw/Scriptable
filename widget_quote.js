@@ -32,7 +32,7 @@ widget.url = "shortcuts://run-shortcut?" +
                 "input=" + encodeURI("\"" + quote.q + "\" — " + quote.a);
 
 let date = new Date();
-date.setMinutes(date.getMinutes() + 30);
+date.setMinutes(date.getMinutes() + 120);
 widget.refreshAfterDate = date;
 
 if (config.runsInWidget) {
