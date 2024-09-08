@@ -7,7 +7,7 @@ widget.backgroundColor = new Color("#000000");
 
 widget.useDefaultPadding();
 
-let journalPrompt = widget.addText("❝ How do I want to feel at the end of today? What do I need to do now, so I can feel this way? ❞");
+let journalPrompt = widget.addText("❝ What do I believe to be true that is not? ❞");
 journalPrompt.centerAlignText();
 journalPrompt.textColor = new Color("#ffffff");
 // http://iosfonts.com
