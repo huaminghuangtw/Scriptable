@@ -9,7 +9,7 @@ widget.useDefaultPadding();
 
 widget.addSpacer(20);
 
-let journalPrompt = widget.addText("When you're told that something is impossible, is that the end of the conversation, or does that start a second dialogue in your mind?");
+let journalPrompt = widget.addText("What would my 80-year-old self say about my decisions today?");
 journalPrompt.centerAlignText();
 journalPrompt.textColor = new Color("#ffffff");
 // http://iosfonts.com
