@@ -30,23 +30,25 @@ if (!cachedData || !isCacheValid(new Date(cachedData.expiry))) {
 let q = widget.addText(quote.q);
 q.centerAlignText();
 q.textColor = new Color("#ffffff");
-q.font = new Font("AvenirNext-MediumItalic", 16);
+// http://iosfonts.com
+q.font = new Font("IowanOldStyle-BoldItalic", 18);
 q.minimumScaleFactor = 0.1;
 q.textOpacity = 1;
 
-widget.addSpacer(8);
+widget.addSpacer(15);
 
 let a = widget.addText(quote.a);
 a.centerAlignText();
 a.textColor = new Color("#ffffff");
+// http://iosfonts.com
 a.font = new Font("Avenir Next", 12);
 a.minimumScaleFactor = 0.1;
 a.textOpacity = 0.8;
 
 // Add refresh link
-widget.url = "shortcuts://run-shortcut?" +
-                "name=" + encodeURI("Refresh Quote Widget") + "&" +
-                "input=" + encodeURI("\"" + quote.q + "\" — " + quote.a);
+widget.url = `shortcuts://run-shortcut?` +
+                `name=${encodeURI("Refresh Quote Widget")}&` +
+                `input=${encodeURI("\"" + quote.q + "\" — " + quote.a)}`;
 
 // Display the widget
 if (config.runsInWidget) {
