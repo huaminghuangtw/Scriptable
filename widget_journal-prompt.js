@@ -9,7 +9,7 @@ widget.useDefaultPadding();
 
 widget.addSpacer(20);
 
-let journalPrompt = widget.addText("Am I leaning into my unfair advantages?");
+let journalPrompt = widget.addText("What lie have I repeated to myself so many times that it feels like the truth?");
 journalPrompt.centerAlignText();
 journalPrompt.textColor = new Color("#ffffff");
 // http://iosfonts.com
