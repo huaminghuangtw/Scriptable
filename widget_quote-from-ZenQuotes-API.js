@@ -3,6 +3,7 @@
 // icon-color: gray; icon-glyph: smile-wink;
 
 let widget = new ListWidget();
+
 widget.backgroundColor = new Color("#000000");
 widget.useDefaultPadding();
 
@@ -26,8 +27,8 @@ if (!cachedData || !isCacheValid(new Date(cachedData.expiry))) {
     quote = cachedData.quote;
 }
 
-// Add quote text to the widget
 let q = widget.addText(quote.q);
+
 q.centerAlignText();
 q.textColor = new Color("#ffffff");
 // http://iosfonts.com
@@ -38,6 +39,7 @@ q.textOpacity = 1;
 widget.addSpacer(15);
 
 let a = widget.addText(quote.a);
+
 a.centerAlignText();
 a.textColor = new Color("#ffffff");
 // http://iosfonts.com
@@ -47,15 +49,11 @@ a.textOpacity = 0.8;
 
 // Add refresh link
 widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURI("Refresh Quote Widget")}&` +
+                `name=${encodeURI("Helper for 🌈 Quote Of The Day")}&` +
                 `input=${encodeURI("\"" + quote.q + "\" — " + quote.a)}`;
 
 // Display the widget
-if (config.runsInWidget) {
-    Script.setWidget(widget);
-} else {
-    widget.presentMedium();
-}
+config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
 Script.complete();
 
