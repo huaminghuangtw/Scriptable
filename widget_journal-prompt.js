@@ -2,7 +2,7 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://docs.google.com/spreadsheets/d/1RI3C2N7-LaWG1pZC6xMVvS08OJJQp92qJhLaPSXNzQ0
-const utility = importModule("utility");
+const utils = importModule("utils");
 
 let widget = new ListWidget();
 
@@ -15,15 +15,15 @@ let folderName = "EvergreenLists";
 
 let folderPath = fm.joinPath(fm.bookmarkedPath("Second-Brain"), folderName);
 
-let jsonFile = utility.getAllFilesByExtension(folderPath, "json")
+let jsonFile = utils.getAllFilesByExtension(folderPath, "json")
                         .find(file => file.endsWith("💭 Journal Prompt.json"));
 
 let fileContent = fm.readString(jsonFile);
 
 let reminders = JSON.parse(fileContent).reminders;
 
-let randomJournalPrompt = utility.getRandomItem(
-                                utility.getRandomItem(
+let randomJournalPrompt = utils.getRandomItem(
+                                utils.getRandomItem(
                                     reminders.filter(r =>
                                         r.subtasks &&
                                         r.subtasks.length > 0 &&

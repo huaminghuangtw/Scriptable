@@ -2,7 +2,7 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://gitwhub.com/huaminghuangtw/Weekly-Mindware-Update
-const utility = importModule("utility");
+const utils = importModule("utils");
 
 let widget = new ListWidget();
 
@@ -15,11 +15,11 @@ let folderName = "Weekly-Mindware-Update";
 
 let folderPath = fm.joinPath(fm.bookmarkedPath("Second-Brain"), folderName);
 
-let files = utility.getAllFilesByExtension(folderPath, "md")
+let files = utils.getAllFilesByExtension(folderPath, "md")
                     .filter(file => !file.endsWith("README.md"))
                     .map(file => file.replace(`${folderPath}`, `${folderName}`));
 
-let filePath = utility.getRandomItem(files);
+let filePath = utils.getRandomItem(files);
 
 let fileContent = fm.readString(fm.joinPath(fm.bookmarkedPath("Second-Brain"), filePath));
 
@@ -32,9 +32,9 @@ let sectionContent = fileContent
 let {
   item: randomQuote,
   index: randomIdx
-} = utility.getRandomItemWithIndex(sectionContent);
+} = utils.getRandomItemWithIndex(sectionContent);
 
-let text = widget.addText(utility.convertMarkdownToPlainText(randomQuote));
+let text = widget.addText(utils.convertMarkdownToPlainText(randomQuote));
 
 text.centerAlignText();
 text.textColor = new Color("#ffffff");
@@ -43,7 +43,7 @@ text.font = new Font("IowanOldStyle-BoldItalic", 16);
 text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
-widget.url = utility.buildObsidianOpenFileURI(
+widget.url = utils.buildObsidianOpenFileURI(
   filePath,
   lineOffset + randomIdx
 );

@@ -1,7 +1,7 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-gray; icon-glyph: smile;
-const utility = importModule("utility");
+const utils = importModule("utils");
 
 let inputs = args.shortcutParameter;
 
@@ -11,6 +11,6 @@ const body = inputs.hasOwnProperty("body") ? inputs["body"] : "";
 const openURL = inputs.hasOwnProperty("openURL") ? inputs["openURL"] : "";
 const triggerDate = inputs.hasOwnProperty("triggerDate") ? new Date(inputs["triggerDate"]) : null;
 
-utility.createNotification(title, subtitle, body, openURL, triggerDate);
+utils.createNotification(title, subtitle, body, openURL, triggerDate);
 
 Script.complete();
