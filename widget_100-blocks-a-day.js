@@ -1,7 +1,9 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
+
 // 💡 Inspired by: https://waitbutwhy.com/2016/10/100-blocks-day.html
+
 let widget = new ListWidget();
 
 widget.backgroundColor = new Color("#000000");

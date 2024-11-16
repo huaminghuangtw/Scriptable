@@ -1,6 +1,9 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
+
+// 📁 https://github.com/huaminghuangtw/Dear-Today-Me
+
 let widget = new ListWidget();
 
 widget.backgroundColor = new Color("#000000");
@@ -30,7 +33,10 @@ config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
 Script.complete();
 
+// ================
 // Helper funcitons
+// ================
+
 function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 };
