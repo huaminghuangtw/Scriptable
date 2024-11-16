@@ -1,6 +1,9 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
+
+// 📁 https://github.com/huaminghuangtw/Dear-Today-Me
+
 const utils = importModule("utils");
 
 let widget = new ListWidget();
@@ -9,7 +12,6 @@ widget.backgroundColor = new Color("#000000");
 widget.useDefaultPadding();
 
 let fileContent;
-
 try {
     fileContent = await new Request("https://raw.githubusercontent.com/huaminghuangtw/Dear-Today-Me/main/Dear-Today-Me.md").loadString();
 } catch {
