@@ -6,7 +6,7 @@
 
 let widget = new ListWidget();
 
-widget.backgroundColor = new Color("#000000");
+widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 let now = new Date();

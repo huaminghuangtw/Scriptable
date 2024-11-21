@@ -3,7 +3,7 @@
 // icon-color: gray; icon-glyph: smile-wink;
 let widget = new ListWidget();
 
-widget.backgroundColor = new Color("#000000");
+widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 const cacheKey = "cachedQuote";
@@ -29,7 +29,7 @@ if (!cachedData || !isCacheValid(new Date(cachedData.expiry))) {
 let q = widget.addText(quote.q);
 
 q.centerAlignText();
-q.textColor = new Color("#ffffff");
+q.textColor = Color.white();
 // http://iosfonts.com
 q.font = new Font("IowanOldStyle-BoldItalic", 18);
 q.minimumScaleFactor = 0.1;
@@ -40,14 +40,14 @@ widget.addSpacer(15);
 let a = widget.addText(quote.a);
 
 a.centerAlignText();
-a.textColor = new Color("#ffffff");
+a.textColor = Color.white();
 // http://iosfonts.com
 a.font = new Font("Avenir Next", 12);
 a.minimumScaleFactor = 0.1;
 a.textOpacity = 0.8;
 
 widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURI("Helper for 🌈 Quote Of The Day")}&` +
+                `name=${encodeURI("📥 Add to Inbox")}&` +
                 `input=${encodeURI("\"" + quote.q + "\" — " + quote.a)}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
