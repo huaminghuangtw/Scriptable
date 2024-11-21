@@ -8,7 +8,7 @@ const utils = importModule("utils");
 
 let widget = new ListWidget();
 
-widget.backgroundColor = new Color("#000000");
+widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 let fileContent;
@@ -31,7 +31,7 @@ let plainTextFromMarkdown = utils.convertMarkdownToPlainText(randomParagraph);
 let text = widget.addText(plainTextFromMarkdown);
 
 text.centerAlignText();
-text.textColor = new Color("#ffffff");
+text.textColor = Color.white();
 // http://iosfonts.com
 text.font = new Font("IowanOldStyle-BoldItalic", 16);
 text.minimumScaleFactor = 0.1;
