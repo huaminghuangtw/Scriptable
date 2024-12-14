@@ -12,22 +12,23 @@ const cacheDurationMinutes = 120;
 // Load cache
 let cachedData = Keychain.contains(cacheKey) ? JSON.parse(Keychain.get(cacheKey)) : null;
 
-let quote = "";
-if (!isConnectedToInternet()) {
-    // Use cached quote if offline
-    if (cachedData) {
+let quote = null;
+
+if (await isConnectedToInternet()) {
+    if (isCacheUsable(cachedData)) {
+        // Use cached quote if still valid
         quote = cachedData.quote;
+    } else {
+        // Fetch new quote if online and cache is invalid
+        quote = await fetchQuote();
+        // Cache the new quote and expiry date
+        Keychain.set(cacheKey, JSON.stringify({
+            quote: quote,
+            expiry: new Date(Date.now() + cacheDurationMinutes * 60 * 1000).toISOString()
+        }));
     }
-} else if (!cachedData || !isCacheValid(new Date(cachedData.expiry))) {
-    // Fetch new quote if online and cache is invalid
-    quote = await fetchQuote();
-    // Cache new quote and expiry date
-    Keychain.set(cacheKey, JSON.stringify({
-        quote: quote,
-        expiry: new Date(Date.now() + cacheDurationMinutes * 60 * 1000).toISOString()
-    }));
 } else {
-    // Use cached quote if still valid
+    // Use cached quote if offline
     quote = cachedData.quote;
 }
 
@@ -74,6 +75,10 @@ async function fetchQuote() {
 
 function isCacheValid(expiry) {
     return expiry.getTime() > new Date().getTime();
+}
+
+function isCacheUsable(cachedData) {
+    return cachedData && isCacheValid(new Date(cachedData.expiry));
 }
 
 async function isConnectedToInternet() {
