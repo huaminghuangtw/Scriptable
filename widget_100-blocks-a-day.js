@@ -1,7 +1,6 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
-
 // 💡 Inspired by: https://waitbutwhy.com/2016/10/100-blocks-day.html
 
 let widget = new ListWidget();
@@ -10,7 +9,7 @@ widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 let now = new Date();
-let startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 5);
+let startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4);
 let endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 30);
 
 let totalBlocks = 45;

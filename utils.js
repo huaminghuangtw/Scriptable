@@ -1,11 +1,8 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-brown; icon-glyph: toolbox;
-// Variables used by Scriptable.
-// These must be at the very top of the file. Do not edit.
-// icon-color: deep-gray; icon-glyph: smile;
-
 // Documentation: https://docs.scriptable.app/notification/
+
 module.exports.createNotification = (title, subtitle, body, openURL, triggerDate) => {
     const notification = new Notification();
     if (title) notification.title = title;
