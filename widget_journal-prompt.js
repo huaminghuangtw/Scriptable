@@ -1,7 +1,6 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
-
 // 📁 https://github.com/huaminghuangtw/Evergreen-Lists
 
 const utils = importModule("utils");
