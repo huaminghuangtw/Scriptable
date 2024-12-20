@@ -54,7 +54,7 @@ a.textOpacity = 0.8;
 
 widget.url = `shortcuts://run-shortcut?` +
                 `name=${encodeURI("📥 Add to Inbox")}&` +
-                `input=${encodeURI("\"" + quote.q + "\" — " + quote.a)}`;
+                `input=${encodeURI(`${quote.q.trim()} — ${quote.a.trim()}`)}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
