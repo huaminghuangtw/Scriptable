@@ -7,7 +7,7 @@ widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 const cacheKey = "cachedQuote";
-const cacheDurationMinutes = 120;
+const cacheDurationMinutes = 480;
 
 // Load cache
 let cachedData = Keychain.contains(cacheKey) ? JSON.parse(Keychain.get(cacheKey)) : null;
