@@ -3,13 +3,19 @@
 // icon-color: deep-brown; icon-glyph: toolbox;
 // Documentation: https://docs.scriptable.app/notification/
 
-module.exports.createNotification = (title, subtitle, body, openURL, triggerDate) => {
+module.exports.createNotification = (title, subtitle, body, openURL, triggerDate, actions) => {
     const notification = new Notification();
+    
     if (title) notification.title = title;
     if (subtitle) notification.subtitle = subtitle;
     if (body) notification.body = body;
     if (openURL) notification.openURL = openURL;
     if (triggerDate) notification.setTriggerDate(triggerDate);
+    
+    for (const action of actions) {
+        notification.addAction(action.title, action.url);
+    }
+
     notification.schedule();
 };
 
