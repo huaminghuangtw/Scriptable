@@ -2,7 +2,6 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://gitwhub.com/huaminghuangtw/Weekly-Mindware-Update
-
 const utils = importModule("utils");
 
 let widget = new ListWidget();
