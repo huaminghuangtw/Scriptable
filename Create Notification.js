@@ -5,7 +5,8 @@ const utils = importModule("utils");
 
 let inputs = args.shortcutParameter;
 
-const identifier = inputs.hasOwnProperty("identifier") ? inputs["identifier"] : "";
+const id = inputs.hasOwnProperty("id") ? inputs["id"] : "";
+const threadId = inputs.hasOwnProperty("threadId") ? inputs["threadId"] : "";
 const title = inputs.hasOwnProperty("title") ? inputs["title"] : "";
 const subtitle = inputs.hasOwnProperty("subtitle") ? inputs["subtitle"] : "";
 const body = inputs.hasOwnProperty("body") ? inputs["body"] : "";
@@ -13,6 +14,6 @@ const openURL = inputs.hasOwnProperty("openURL") ? inputs["openURL"] : "";
 const triggerDate = inputs.hasOwnProperty("triggerDate") ? new Date(inputs["triggerDate"]) : null;
 const actions = inputs.hasOwnProperty("actions") ? JSON.parse("[" + inputs["actions"].replace(/\n/g, ",") + "]") : [];
 
-utils.createNotification(identifier, title, subtitle, body, openURL, triggerDate, actions);
+utils.createNotification(id, threadId, title, subtitle, body, openURL, triggerDate, actions);
 
 Script.complete();
