@@ -1,19 +1,26 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-gray; icon-glyph: smile;
-const utils = importModule("utils");
+// const utils = importModule("utils");
+const inputs = args.shortcutParameter;
 
-let inputs = args.shortcutParameter;
+const notification = new Notification();
 
-const id = inputs.hasOwnProperty("id") ? inputs["id"] : "";
-const threadId = inputs.hasOwnProperty("threadId") ? inputs["threadId"] : "";
-const title = inputs.hasOwnProperty("title") ? inputs["title"] : "";
-const subtitle = inputs.hasOwnProperty("subtitle") ? inputs["subtitle"] : "";
-const body = inputs.hasOwnProperty("body") ? inputs["body"] : "";
-const openURL = inputs.hasOwnProperty("openURL") ? inputs["openURL"] : "";
-const triggerDate = inputs.hasOwnProperty("triggerDate") ? new Date(inputs["triggerDate"]) : null;
-const actions = inputs.hasOwnProperty("actions") ? JSON.parse("[" + inputs["actions"].replace(/\n/g, ",") + "]") : [];
+if (inputs.id) notification.identifier = inputs.id;
+if (inputs.threadId) notification.threadIdentifier = inputs.threadId;
+if (inputs.title) notification.title = inputs.title;
+if (inputs.subtitle) notification.subtitle = inputs.subtitle;
+if (inputs.body) notification.body = inputs.body;
+if (inputs.openURL) notification.openURL = inputs.openURL;
+if (inputs.triggerDate) notification.setTriggerDate(new Date(inputs.triggerDate));
 
-utils.createNotification(id, threadId, title, subtitle, body, openURL, triggerDate, actions);
+const actions = inputs.actions 
+    ? JSON.parse(`[${inputs.actions.replace(/\n/g, ",")}]`) 
+    : (inputs.openURL ? [{ title: "🔗 Open URL", url: inputs.openURL }] : []);
 
+actions.forEach(action => {
+    notification.addAction(action.title, action.url);
+});
+
+notification.schedule();
 Script.complete();

@@ -1,25 +1,6 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-brown; icon-glyph: toolbox;
-module.exports.createNotification = (id, threadId, title, subtitle, body, openURL, triggerDate, actions) => {
-    // https://docs.scriptable.app/notification/
-    const notification = new Notification();
-
-    if (id) notification.identifier = id;
-    if (threadId) notification.threadIdentifier = threadId;
-    if (title) notification.title = title;
-    if (subtitle) notification.subtitle = subtitle;
-    if (body) notification.body = body;
-    if (openURL) notification.openURL = openURL;
-    if (triggerDate) notification.setTriggerDate(triggerDate);
-    
-    for (const action of actions) {
-        notification.addAction(action.title, action.url);
-    }
-
-    notification.schedule();
-};
-
 module.exports.getRandomItem = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
