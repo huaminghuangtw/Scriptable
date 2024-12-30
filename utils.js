@@ -1,11 +1,11 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-brown; icon-glyph: toolbox;
-// Documentation: https://docs.scriptable.app/notification/
-
-module.exports.createNotification = (title, subtitle, body, openURL, triggerDate, actions) => {
+module.exports.createNotification = (identifier, title, subtitle, body, openURL, triggerDate, actions) => {
+    // https://docs.scriptable.app/notification/
     const notification = new Notification();
-    
+
+    if (identifier) notification.identifier = identifier;
     if (title) notification.title = title;
     if (subtitle) notification.subtitle = subtitle;
     if (body) notification.body = body;
@@ -29,13 +29,14 @@ module.exports.getRandomItemWithIndex = (arr) => {
 };
 
 module.exports.buildObsidianOpenFileURI = (filePath, lineNumber=1) => {
-    const url = `obsidian://adv-uri?` +
-                `filepath=${encodeURIComponent(filePath)}&` +
-                `viewmode=live&` +
-                `openmode=true&` +
-                `line=${lineNumber}&` +
-                `commandid=${encodeURIComponent("editor:unfold-all")}`;
-    return url;
+    return (
+        `obsidian://adv-uri?` +
+        `filepath=${encodeURIComponent(filePath)}&` +
+        `viewmode=source&` +
+        `openmode=false&` +
+        `line=${lineNumber}&` +
+        `commandid=${encodeURIComponent("editor:unfold-all")}`
+    );
 };
 
 module.exports.getAllFilesByExtension = (folderPath, fileExtension) => {
