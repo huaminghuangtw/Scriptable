@@ -1,12 +1,21 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-gray; icon-glyph: smile;
-// const utils = importModule("utils");
 const inputs = args.shortcutParameter;
+
+const notificationId = inputs.id ? inputs.id : (inputs.title ? inputs.title : "");
+
+const deliveredNotifications = await Notification.allDelivered();
+
+if (deliveredNotifications.some(n => n.identifier === notificationId)) {
+    Script.complete();
+    return;
+}
 
 const notification = new Notification();
 
-if (inputs.id) notification.identifier = inputs.id;
+notification.identifier = notificationId;
+
 if (inputs.threadId) notification.threadIdentifier = inputs.threadId;
 if (inputs.title) notification.title = inputs.title;
 if (inputs.subtitle) notification.subtitle = inputs.subtitle;
@@ -23,4 +32,5 @@ actions.forEach(action => {
 });
 
 notification.schedule();
+
 Script.complete();
