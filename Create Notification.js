@@ -3,18 +3,9 @@
 // icon-color: deep-gray; icon-glyph: smile;
 const inputs = args.shortcutParameter;
 
-const notificationId = inputs.id ? inputs.id : (inputs.title ? inputs.title : "");
-
-const deliveredNotifications = await Notification.allDelivered();
-
-if (deliveredNotifications.some(n => n.identifier === notificationId)) {
-    Script.complete();
-    return;
-}
-
 const notification = new Notification();
 
-notification.identifier = notificationId;
+notification.identifier = inputs.id ? inputs.id : (inputs.title ? inputs.title : "");
 
 if (inputs.threadId) notification.threadIdentifier = inputs.threadId;
 if (inputs.title) notification.title = inputs.title;
