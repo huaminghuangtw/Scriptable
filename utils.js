@@ -15,7 +15,7 @@ module.exports.buildObsidianOpenFileURI = (filePath, lineNumber=1) => {
         `obsidian://adv-uri?` +
         `filepath=${encodeURIComponent(filePath)}&` +
         `viewmode=source&` +
-        `openmode=false&` +
+        `openmode=true&` +
         `line=${lineNumber}&` +
         `commandid=${encodeURIComponent("editor:unfold-all")}`
     );
