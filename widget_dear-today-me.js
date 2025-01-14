@@ -36,8 +36,15 @@ text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
 widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURI("Helper for 🌟 Dear Today Me")}&` +
-                `input=${encodeURI(plainTextFromMarkdown)}`;
+             `name=${encodeURI("_Text2Speech")}&` +
+             `input=${encodeURI(
+                JSON.stringify(
+                    {
+                        text: plainTextFromMarkdown,
+                        language: "EN"
+                    }
+                )
+            )}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
