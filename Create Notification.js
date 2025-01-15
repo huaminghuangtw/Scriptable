@@ -9,7 +9,15 @@ notification.identifier = inputs.id ? inputs.id : (inputs.title ? inputs.title :
 
 if (inputs.threadId) notification.threadIdentifier = inputs.threadId;
 if (inputs.title) notification.title = inputs.title;
-if (inputs.subtitle) notification.subtitle = inputs.subtitle;
+
+const fm = FileManager.iCloud();
+const data = JSON.parse(fm.readString(fm.bookmarkedPath("myDataJarBackup.json")));
+const textDivider = data["Text Divider"];
+
+notification.subtitle = inputs.subtitle 
+    ? `${textDivider}\n${inputs.subtitle}\n${textDivider}` 
+    : textDivider;
+
 if (inputs.body) notification.body = inputs.body;
 if (inputs.openURL) notification.openURL = inputs.openURL;
 if (inputs.triggerDate) notification.setTriggerDate(new Date(inputs.triggerDate));
