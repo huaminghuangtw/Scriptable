@@ -23,8 +23,8 @@ if (inputs.openURL) notification.openURL = inputs.openURL;
 if (inputs.triggerDate) notification.setTriggerDate(new Date(inputs.triggerDate));
 
 const actions = inputs.actions 
-    ? JSON.parse(`[${inputs.actions.replace(/\n/g, ",")}]`) 
-    : (inputs.openURL ? [{ title: "🔗 Open URL", url: inputs.openURL }] : []);
+     ? JSON.parse(`[${inputs.actions.replace(/\n/g, ",")}]`) 
+     : (inputs.openURL ? [{ title: "🔗 Open URL", url: inputs.openURL }] : []);
 
 actions.forEach(action => {
     notification.addAction(action.title, action.url);
