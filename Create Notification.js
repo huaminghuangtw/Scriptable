@@ -10,9 +10,7 @@ notification.identifier = inputs.id ? inputs.id : (inputs.title ? inputs.title :
 if (inputs.threadId) notification.threadIdentifier = inputs.threadId;
 if (inputs.title) notification.title = inputs.title;
 
-const fm = FileManager.iCloud();
-const data = JSON.parse(fm.readString(fm.bookmarkedPath("myDataJarBackup.json")));
-const textDivider = data["Text Divider"];
+const textDivider = "──────────────";
 
 notification.subtitle = inputs.subtitle 
     ? `${textDivider}\n${inputs.subtitle}\n${textDivider}` 
