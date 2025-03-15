@@ -12,7 +12,7 @@ widget.useDefaultPadding();
 
 let fileContent;
 try {
-    fileContent = await new Request("https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/%F0%9F%92%AD%20Journal%20Prompt/%F0%9F%92%AD%20Journal%20Prompt.json").loadString();
+    fileContent = await new Request(`https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/${encodeURIComponent("💭 Journal Prompt")}/${encodeURIComponent("💭 Journal Prompt")}.json`).loadString();
 } catch {
     let fm = FileManager.iCloud();
     let folderPath = fm.joinPath(fm.bookmarkedPath("Second-Brain"), "EvergreenLists");
@@ -41,9 +41,10 @@ text.font = new Font("IowanOldStyle-BoldItalic", 20);
 text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
-widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURI("Search Reminders")}&` +
-                `input=${encodeURI(randomJournalPrompt)}`;
+widget.url =
+    `shortcuts://run-shortcut?` +
+    `name=${encodeURIComponent("Search Reminders")}&` +
+    `input=${encodeURIComponent(randomJournalPrompt)}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 

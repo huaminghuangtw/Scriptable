@@ -37,8 +37,8 @@ text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
 widget.url = `shortcuts://run-shortcut?` +
-             `name=${encodeURI("_Text2Speech")}&` +
-             `input=${encodeURI(
+             `name=${encodeURIComponent("_Text2Speech")}&` +
+             `input=${encodeURIComponent(
                 JSON.stringify(
                     {
                         text: plainTextFromMarkdown,

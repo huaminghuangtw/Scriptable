@@ -10,19 +10,70 @@ let widget = new ListWidget();
 widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
-let fm = FileManager.iCloud();
+let files = [];
+let filePath = "";
+let fileContent = "";
 
-let folderName = "Weekly-Mindware-Update";
+try {
+    const repoOwner = "huaminghuangtw";
+    const repoName = "Weekly-Mindware-Update";
 
-let folderPath = fm.joinPath(fm.bookmarkedPath("Second-Brain"), folderName);
+    const headers = {
+        accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    };
 
-let files = utils.getAllFilesByExtension(folderPath, "md")
-                 .filter(file => !file.endsWith("README.md"))
-                 .map(file => file.replace(`${folderPath}`, `${folderName}`));
+    async function getLatestSHA() {
+        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/ref/heads/main`;
+        let req = new Request(url);
+        req.headers = headers;
+        let response = await req.loadJSON();
+        return response.object.sha;
+    }
 
-let filePath = utils.getRandomItem(files);
+    async function getRepoTree(sha) {
+        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${sha}?recursive=true`;
+        let req = new Request(url);
+        req.headers = headers;
+        let response = await req.loadJSON();
+        return response.tree;
+    }
 
-let fileContent = fm.readString(fm.joinPath(fm.bookmarkedPath("Second-Brain"), filePath));
+    async function getFileContent(filePath) {
+        let url = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
+        let req = new Request(url);
+        let content = await req.loadString();
+        return content;
+    }
+
+    let sha = await getLatestSHA();
+    let tree = await getRepoTree(sha);
+        
+    for (let item of tree) {
+        if (item.path.includes("/")) {
+            files.push(item);
+        }
+    }
+
+    filePath = utils.getRandomItem(files);
+
+    fileContent = await getFileContent(filePath.path);
+} catch {
+    let fm = FileManager.iCloud();
+    let folderName = "Weekly-Mindware-Update";
+    let folderPath = fm.joinPath(fm.bookmarkedPath("Second-Brain"), folderName);
+    
+    files = utils
+        .getAllFilesByExtension(folderPath, "md")
+        .filter((file) => !file.endsWith("README.md"))
+        .map((file) => file.replace(`${folderPath}`, `${folderName}`));
+    
+    filePath = utils.getRandomItem(files);
+    
+    fileContent = fm.readString(
+        fm.joinPath(fm.bookmarkedPath("Second-Brain"), filePath)
+    );
+}
 
 let lineOffset = 13;
 let sectionContent = fileContent.split("\n")
@@ -30,8 +81,8 @@ let sectionContent = fileContent.split("\n")
                                 .map(line => line.slice(1).trim());
 
 let {
-  item: randomQuote,
-  index: randomIdx
+    item: randomQuote,
+    index: randomIdx
 } = utils.getRandomItemWithIndex(sectionContent);
 
 let text = widget.addText(utils.convertMarkdownToPlainText(randomQuote));
@@ -44,8 +95,8 @@ text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
 widget.url = utils.buildObsidianOpenFileURI(
-  filePath,
-  lineOffset + randomIdx
+    filePath,
+    lineOffset + randomIdx
 );
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
