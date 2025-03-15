@@ -19,8 +19,8 @@ text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
 widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURI("🌐 Search Web")}&` +
-                `input=${encodeURI(book_excerpts)}`;
+                `name=${encodeURIComponent("🌐 Search Web")}&` +
+                `input=${encodeURIComponent(book_excerpts)}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 

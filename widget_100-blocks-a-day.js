@@ -31,7 +31,7 @@ let text = widget.addText(blocks.join(" "));
 text.centerAlignText();
 
 widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURI("Show Year Progress")}`;
+                `name=${encodeURIComponent("Show Year Progress")}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
