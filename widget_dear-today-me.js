@@ -11,6 +11,7 @@ widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 let fileContent;
+
 try {
     fileContent = await new Request("https://raw.githubusercontent.com/huaminghuangtw/Dear-Today-Me/main/Dear-Today-Me.md").loadString();
 } catch {
