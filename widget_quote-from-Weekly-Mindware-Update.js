@@ -18,23 +18,13 @@ try {
     const repoOwner = "huaminghuangtw";
     const repoName = "Weekly-Mindware-Update";
 
-    const headers = {
-        accept: "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-    };
-
-    async function getLatestSHA() {
-        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/ref/heads/main`;
+    async function getRepoTree() {
+        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/main?recursive=true`;
         let req = new Request(url);
-        req.headers = headers;
-        let response = await req.loadJSON();
-        return response.object.sha;
-    }
-
-    async function getRepoTree(sha) {
-        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${sha}?recursive=true`;
-        let req = new Request(url);
-        req.headers = headers;
+        req.headers = {
+            accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        };
         let response = await req.loadJSON();
         return response.tree;
     }
@@ -46,17 +36,12 @@ try {
         return content;
     }
 
-    let sha = await getLatestSHA();
-    let tree = await getRepoTree(sha);
-        
-    for (let item of tree) {
-        if (item.path.includes("/")) {
-            files.push(item);
-        }
-    }
+    let tree = await getRepoTree();
+
+    files = tree.filter(item => item.path.includes("/"));
 
     filePath = utils.getRandomItem(files);
-
+    
     fileContent = await getFileContent(filePath.path);
 } catch {
     let fm = FileManager.iCloud();
