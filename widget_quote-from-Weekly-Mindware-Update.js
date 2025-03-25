@@ -75,10 +75,10 @@ try {
     );
 }
 
-let lineOffset = 13;
 let sectionContent = fileContent.split("\n")
-                                .slice(lineOffset - 1, lineOffset - 1 + 5)
-                                .map(line => line.slice(1).trim());
+                                .filter(line => line.startsWith("*"))
+                                .map(line => line.slice(1).trim())
+                                .slice(0, 5);
 
 let {
     item: randomQuote,
@@ -94,6 +94,7 @@ text.font = new Font("IowanOldStyle-BoldItalic", 16);
 text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
+let lineOffset = 13;
 widget.url = utils.buildObsidianOpenFileURI(
     filePath,
     lineOffset + randomIdx
