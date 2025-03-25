@@ -23,16 +23,8 @@ try {
         "X-GitHub-Api-Version": "2022-11-28",
     };
 
-    async function getLatestSHA() {
-        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/ref/heads/main`;
-        let req = new Request(url);
-        req.headers = headers;
-        let response = await req.loadJSON();
-        return response.object.sha;
-    }
-
-    async function getRepoTree(sha) {
-        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/${sha}?recursive=true`;
+    async function getRepoTree() {
+        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/main?recursive=true`;
         let req = new Request(url);
         req.headers = headers;
         let response = await req.loadJSON();
@@ -46,14 +38,9 @@ try {
         return content;
     }
 
-    let sha = await getLatestSHA();
-    let tree = await getRepoTree(sha);
+    let tree = await getRepoTree();
         
-    for (let item of tree) {
-        if (item.path.includes("/")) {
-            files.push(item);
-        }
-    }
+    files = tree.filter(item => item.path.includes("/"));
 
     filePath = utils.getRandomItem(files);
 
