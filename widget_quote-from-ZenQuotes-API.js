@@ -53,7 +53,7 @@ widget.addSpacer(15);
 let a = widget.addText(quote.a);
 
 a.centerAlignText();
-a.textColor = Color.white();
+a.textColor = Color.gray();
 // http://iosfonts.com
 a.font = new Font("Avenir Next", 12);
 a.minimumScaleFactor = 0.1;

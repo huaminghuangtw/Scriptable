@@ -10,13 +10,14 @@ let widget = new ListWidget();
 widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
+let filename = "Dear-Today-Me"
 let fileContent;
 
 try {
-    fileContent = await new Request("https://raw.githubusercontent.com/huaminghuangtw/Dear-Today-Me/main/Dear-Today-Me.md").loadString();
+    fileContent = await new Request(`https://raw.githubusercontent.com/huaminghuangtw/${filename}/main/${filename}.md`).loadString();
 } catch {
     let fm = FileManager.iCloud();
-    fileContent = fm.readString(fm.joinPath(fm.bookmarkedPath("Second-Brain"), "Dear-Today-Me/Dear-Today-Me.md"));
+    fileContent = fm.readString(fm.joinPath(fm.bookmarkedPath("Second-Brain"), "${filename}/${filename}.md"));
 }
 
 let allParagraphs = fileContent.split("\n\n");
@@ -28,12 +29,12 @@ let randomParagraph = utils.getRandomItem(selectedParagraphs);
 
 let plainTextFromMarkdown = utils.convertMarkdownToPlainText(randomParagraph);
 
-let text = widget.addText(plainTextFromMarkdown);
+let text = widget.addText("“" + plainTextFromMarkdown + "”");
 
 text.centerAlignText();
 text.textColor = Color.white();
 // http://iosfonts.com
-text.font = new Font("IowanOldStyle-BoldItalic", 16);
+text.font = new Font("IowanOldStyle-BoldItalic", 18);
 text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
