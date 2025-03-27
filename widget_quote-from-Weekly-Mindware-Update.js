@@ -77,7 +77,7 @@ let text = widget.addText(utils.convertMarkdownToPlainText(randomQuote));
 text.centerAlignText();
 text.textColor = Color.white();
 // http://iosfonts.com
-text.font = new Font("IowanOldStyle-BoldItalic", 16);
+text.font = new Font("IowanOldStyle-BoldItalic", 18);
 text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 

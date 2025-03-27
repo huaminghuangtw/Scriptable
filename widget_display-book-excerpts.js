@@ -1,26 +1,40 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
+let bookName = args.widgetParameter;
+
 let widget = new ListWidget();
 
 widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 let fm = FileManager.iCloud();
-let book_excerpts = fm.readString(fm.bookmarkedPath("book_excerpts.txt"));
+let filePath = fm.bookmarkedPath("book_excerpts.json");
+let bookExcerpts = JSON.parse(fm.readString(filePath))[bookName];
 
-let text = widget.addText(book_excerpts);
+let a = widget.addText(bookExcerpts);
 
-text.centerAlignText();
-text.textColor = Color.white();
+a.centerAlignText();
+a.textColor = Color.white();
 // http://iosfonts.com
-text.font = new Font("IowanOldStyle-BoldItalic", 16);
-text.minimumScaleFactor = 0.1;
-text.textOpacity = 1;
+a.font = new Font("IowanOldStyle-BoldItalic", 18);
+a.minimumScaleFactor = 0.1;
+a.textOpacity = 1;
+
+widget.addSpacer(15);
+
+let b = widget.addText(`— ${bookName}`);
+
+b.centerAlignText();
+b.textColor = Color.gray();
+// http://iosfonts.com
+b.font = new Font("IowanOldStyle-Italic", 12);
+b.minimumScaleFactor = 0.1;
+b.textOpacity = 0.8;
 
 widget.url = `shortcuts://run-shortcut?` +
                 `name=${encodeURIComponent("🌐 Search Web")}&` +
-                `input=${encodeURIComponent(book_excerpts)}`;
+                `input=${encodeURIComponent(bookExcerpts)}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 

@@ -10,13 +10,15 @@ let widget = new ListWidget();
 widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
+let filename = "💭 Journal Prompt";
 let fileContent;
+
 try {
-    fileContent = await new Request("https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/%F0%9F%92%AD%20Journal%20Prompt/%F0%9F%92%AD%20Journal%20Prompt.json").loadString();
+    fileContent = await new Request(`https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/${encodeURIComponent(filename)}/${encodeURIComponent(filename)}.json`).loadString();
 } catch {
     let fm = FileManager.iCloud();
     let folderPath = fm.joinPath(fm.bookmarkedPath("Second-Brain"), "EvergreenLists");
-    let jsonFile = utils.getAllFilesByExtension(folderPath, "json").find(file => file.endsWith("💭 Journal Prompt.json"));
+    let jsonFile = utils.getAllFilesByExtension(folderPath, "json").find(file => file.startsWith(filename));
     fileContent = fm.readString(jsonFile);
 }
 
@@ -32,7 +34,7 @@ let randomJournalPrompt = utils.getRandomItem(
                                 ).subtasks
                             ).name;
 
-let text = widget.addText(randomJournalPrompt);
+let text = widget.addText("“" + randomJournalPrompt + "”");
 
 text.centerAlignText();
 text.textColor = Color.white();
