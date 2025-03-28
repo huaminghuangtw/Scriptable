@@ -29,6 +29,21 @@ let totalBlocks = 50;
 let currentMinutes = (now - startTime) / 60000;
 let totalAwakeMinutes = (endTime - startTime) / 60000;
 
+if (currentMinutes < 0 || currentMinutes > totalAwakeMinutes) {
+    let message = widget.addText(
+        currentMinutes < 0 
+            ? "🌅 A new day awaits. Time to rise and welcome the day ahead!" 
+            : "🌙 The day is done. Time to recharge and prepare for tomorrow!"
+    );
+    message.centerAlignText();
+    message.textColor = new Color("#A0A0A0");
+    message.font = Font.boldSystemFont(14);
+    message.textOpacity = 0.8;
+    config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
+    Script.complete();
+    return;
+}
+
 let blockDuration = totalAwakeMinutes / totalBlocks;
 
 let currentBlockIndex = Math.floor(currentMinutes / blockDuration);
