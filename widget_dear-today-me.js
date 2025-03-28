@@ -10,14 +10,21 @@ let widget = new ListWidget();
 widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
-let filename = "Dear-Today-Me"
+let filename = "Dear-Today-Me";
 let fileContent;
 
 try {
-    fileContent = await new Request(`https://raw.githubusercontent.com/huaminghuangtw/${filename}/main/${filename}.md`).loadString();
+    fileContent = await new Request(
+        `https://raw.githubusercontent.com/huaminghuangtw/${filename}/main/${filename}.md`
+    ).loadString();
 } catch {
     let fm = FileManager.iCloud();
-    fileContent = fm.readString(fm.joinPath(fm.bookmarkedPath("Second-Brain"), "${filename}/${filename}.md"));
+    fileContent = fm.readString(
+        fm.joinPath(
+            fm.bookmarkedPath("Second-Brain"),
+            `${filename}/${filename}.md`
+        )
+    );
 }
 
 let allParagraphs = fileContent.split("\n\n");
@@ -38,16 +45,15 @@ text.font = new Font("IowanOldStyle-BoldItalic", 18);
 text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
-widget.url = `shortcuts://run-shortcut?` +
-             `name=${encodeURIComponent("_Text2Speech")}&` +
-             `input=${encodeURIComponent(
-                JSON.stringify(
-                    {
-                        text: plainTextFromMarkdown,
-                        language: "EN"
-                    }
-                )
-            )}`;
+widget.url =
+    `shortcuts://run-shortcut?` +
+    `name=${encodeURIComponent("_Text2Speech")}&` +
+    `input=${encodeURIComponent(
+        JSON.stringify({
+            text: plainTextFromMarkdown,
+            language: "EN",
+        })
+    )}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 

@@ -11,32 +11,32 @@ const cacheDurationMinutes = 480;
 
 // Load cache
 let cachedData = Keychain.contains(cacheKey)
-  ? JSON.parse(Keychain.get(cacheKey))
-  : null;
+    ? JSON.parse(Keychain.get(cacheKey))
+    : null;
 
 let quote = null;
 
 if (await isConnectedToInternet()) {
-  if (isCacheUsable(cachedData)) {
-    // Use cached quote if still valid
-    quote = cachedData.quote;
-  } else {
-    // Fetch new quote if online and cache is invalid
-    quote = await fetchQuote();
-    // Cache the new quote and expiry date
-    Keychain.set(
-      cacheKey,
-      JSON.stringify({
-        quote: quote,
-        expiry: new Date(
-          Date.now() + cacheDurationMinutes * 60 * 1000
-        ).toISOString(),
-      })
-    );
-  }
+    if (isCacheUsable(cachedData)) {
+        // Use cached quote if still valid
+        quote = cachedData.quote;
+    } else {
+        // Fetch new quote if online and cache is invalid
+        quote = await fetchQuote();
+        // Cache the new quote and expiry date
+        Keychain.set(
+            cacheKey,
+            JSON.stringify({
+                quote: quote,
+                expiry: new Date(
+                    Date.now() + cacheDurationMinutes * 60 * 1000
+                ).toISOString(),
+            })
+        );
+    }
 } else {
-  // Use cached quote if offline
-  quote = cachedData.quote;
+    // Use cached quote if offline
+    quote = cachedData.quote;
 }
 
 let q = widget.addText(quote.q);
@@ -60,9 +60,9 @@ a.minimumScaleFactor = 0.1;
 a.textOpacity = 0.8;
 
 widget.url =
-  `shortcuts://run-shortcut?` +
-  `name=${encodeURIComponent("📥 Add to Inbox")}&` +
-  `input=${encodeURIComponent(`“${quote.q.trim()}” — ${quote.a.trim()}`)}`;
+    `shortcuts://run-shortcut?` +
+    `name=${encodeURIComponent("📥 Add to Inbox")}&` +
+    `input=${encodeURIComponent(`“${quote.q.trim()}” — ${quote.a.trim()}`)}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
@@ -74,28 +74,28 @@ Script.complete();
 
 // ZenQuotes API: https://zenquotes.io
 async function fetchQuote() {
-  const response = await new Request(
-    "https://zenquotes.io/api/random"
-  ).loadJSON();
-  return {
-    q: response[0].q,
-    a: response[0].a,
-  };
+    const response = await new Request(
+        "https://zenquotes.io/api/random"
+    ).loadJSON();
+    return {
+        q: response[0].q,
+        a: response[0].a,
+    };
 }
 
 function isCacheValid(expiry) {
-  return expiry.getTime() > new Date().getTime();
+    return expiry.getTime() > new Date().getTime();
 }
 
 function isCacheUsable(cachedData) {
-  return cachedData && isCacheValid(new Date(cachedData.expiry));
+    return cachedData && isCacheValid(new Date(cachedData.expiry));
 }
 
 async function isConnectedToInternet() {
-  try {
-    await new Request("https://www.google.com").load();
-    return true;
-  } catch {
-    return false;
-  }
+    try {
+        await new Request("https://www.google.com").load();
+        return true;
+    } catch {
+        return false;
+    }
 }
