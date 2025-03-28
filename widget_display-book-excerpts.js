@@ -32,9 +32,15 @@ b.font = new Font("IowanOldStyle-Italic", 12);
 b.minimumScaleFactor = 0.1;
 b.textOpacity = 0.8;
 
-widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURIComponent("🌐 Search Web")}&` +
-                `input=${encodeURIComponent(bookExcerpts)}`;
+widget.url =
+    `shortcuts://run-shortcut?` +
+    `name=${encodeURIComponent("🤖 ChatGPT")}&` +
+    `input=${encodeURIComponent(
+        JSON.stringify({
+            prompt: `Please elaborate more on the following passage from the book <${bookName}>. Be brief and keep it short.`,
+            content: bookExcerpts,
+        })
+    )}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 

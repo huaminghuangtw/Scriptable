@@ -9,8 +9,20 @@ widget.backgroundColor = Color.black();
 widget.useDefaultPadding();
 
 let now = new Date();
-let startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4);
-let endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 30);
+let startTime = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    4,
+    0
+);
+let endTime = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    20,
+    30
+);
 
 let totalBlocks = 50;
 
@@ -30,8 +42,9 @@ let text = widget.addText(blocks.join(" "));
 
 text.centerAlignText();
 
-widget.url = `shortcuts://run-shortcut?` +
-                `name=${encodeURIComponent("Show Year Progress")}`;
+widget.url =
+    `shortcuts://run-shortcut?` +
+    `name=${encodeURIComponent("Show Year Progress")}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 

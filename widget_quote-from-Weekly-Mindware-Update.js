@@ -39,8 +39,8 @@ try {
     }
 
     let tree = await getRepoTree();
-        
-    files = tree.filter(item => item.path.includes("/"));
+
+    files = tree.filter((item) => item.path.includes("/"));
 
     filePath = utils.getRandomItem(files);
 
@@ -49,28 +49,27 @@ try {
     let fm = FileManager.iCloud();
     let folderName = "Weekly-Mindware-Update";
     let folderPath = fm.joinPath(fm.bookmarkedPath("Second-Brain"), folderName);
-    
+
     files = utils
         .getAllFilesByExtension(folderPath, "md")
         .filter((file) => !file.endsWith("README.md"))
         .map((file) => file.replace(`${folderPath}`, `${folderName}`));
-    
+
     filePath = utils.getRandomItem(files);
-    
+
     fileContent = fm.readString(
         fm.joinPath(fm.bookmarkedPath("Second-Brain"), filePath)
     );
 }
 
-let sectionContent = fileContent.split("\n")
-                                .filter(line => line.startsWith("*"))
-                                .map(line => line.slice(1).trim())
-                                .slice(0, 5);
+let sectionContent = fileContent
+    .split("\n")
+    .filter((line) => line.startsWith("*"))
+    .map((line) => line.slice(1).trim())
+    .slice(0, 5);
 
-let {
-    item: randomQuote,
-    index: randomIdx
-} = utils.getRandomItemWithIndex(sectionContent);
+let { item: randomQuote, index: randomIdx } =
+    utils.getRandomItemWithIndex(sectionContent);
 
 let text = widget.addText(utils.convertMarkdownToPlainText(randomQuote));
 
@@ -82,10 +81,7 @@ text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
 let lineOffset = 13;
-widget.url = utils.buildObsidianOpenFileURI(
-    filePath,
-    lineOffset + randomIdx
-);
+widget.url = utils.buildObsidianOpenFileURI(filePath, lineOffset + randomIdx);
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
