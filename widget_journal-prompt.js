@@ -27,7 +27,7 @@ try {
     );
     let jsonFile = utils
         .getAllFilesByExtension(folderPath, "json")
-        .find((file) => file.startsWith(filename));
+        .find((file) => file.includes(filename));
     fileContent = fm.readString(jsonFile);
 }
 

@@ -44,7 +44,7 @@ let q = widget.addText(quote.q);
 q.centerAlignText();
 q.textColor = Color.white();
 // http://iosfonts.com
-q.font = new Font("IowanOldStyle-BoldItalic", 18);
+q.font = new Font("IowanOldStyle-BoldItalic", 20);
 q.minimumScaleFactor = 0.1;
 q.textOpacity = 1;
 
