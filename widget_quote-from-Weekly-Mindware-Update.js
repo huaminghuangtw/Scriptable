@@ -68,10 +68,11 @@ let sectionContent = fileContent
     .map((line) => line.slice(1).trim())
     .slice(0, 5);
 
-let { item: randomQuote, index: randomIdx } =
-    utils.getRandomItemWithIndex(sectionContent);
+let randomQuote = utils.convertMarkdownToPlainText(
+    utils.getRandomItem(sectionContent)
+);
 
-let text = widget.addText(utils.convertMarkdownToPlainText(randomQuote));
+let text = widget.addText(randomQuote);
 
 text.centerAlignText();
 text.textColor = Color.white();
@@ -80,8 +81,15 @@ text.font = new Font("IowanOldStyle-BoldItalic", 18);
 text.minimumScaleFactor = 0.1;
 text.textOpacity = 1;
 
-let lineOffset = 13;
-widget.url = utils.buildObsidianOpenFileURI(filePath, lineOffset + randomIdx);
+widget.url =
+    `shortcuts://run-shortcut?` +
+    `name=${encodeURIComponent("_Text2Speech")}&` +
+    `input=${encodeURIComponent(
+        JSON.stringify({
+            text: randomQuote,
+            language: "EN",
+        })
+    )}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 

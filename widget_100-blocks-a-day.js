@@ -75,7 +75,7 @@ text.centerAlignText();
 
 widget.url =
     `shortcuts://run-shortcut?` +
-    `name=${encodeURIComponent("Show Year Progress")}`;
+    `name=${encodeURIComponent("Show Day Progress")}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
