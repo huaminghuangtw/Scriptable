@@ -52,7 +52,7 @@ text.textOpacity = 1;
 
 widget.url =
     `shortcuts://run-shortcut?` +
-    `name=${encodeURIComponent("🤖 ChatGPT")}&` +
+    `name=${encodeURIComponent("Gemini - Generate Content")}&` +
     `input=${encodeURIComponent(
         JSON.stringify({
             prompt: "If you were in my shoes, how would you answer this question? Get specific and be brief. Use less than 100 words.",
