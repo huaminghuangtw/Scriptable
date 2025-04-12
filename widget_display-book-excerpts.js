@@ -34,7 +34,7 @@ b.textOpacity = 0.8;
 
 widget.url =
     `shortcuts://run-shortcut?` +
-    `name=${encodeURIComponent("🤖 ChatGPT")}&` +
+    `name=${encodeURIComponent("Gemini - Generate Content")}&` +
     `input=${encodeURIComponent(
         JSON.stringify({
             prompt: `Please elaborate more on the following passage from the book <${bookName}>. Be brief and keep it short.`,
