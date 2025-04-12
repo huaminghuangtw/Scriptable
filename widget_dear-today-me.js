@@ -36,7 +36,7 @@ let randomParagraph = utils.getRandomItem(selectedParagraphs);
 
 let plainTextFromMarkdown = utils.convertMarkdownToPlainText(randomParagraph);
 
-let text = widget.addText("“" + plainTextFromMarkdown + "”");
+let text = widget.addText("★ " + plainTextFromMarkdown + " ★");
 
 text.centerAlignText();
 text.textColor = Color.white();
