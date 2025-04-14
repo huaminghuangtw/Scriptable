@@ -34,7 +34,7 @@ if (currentMinutes < 0 || currentMinutes > totalAwakeMinutes) {
     );
     message.centerAlignText();
     message.textColor = new Color("#A0A0A0");
-    message.font = Font.boldSystemFont(18);
+    message.font = Font.boldSystemFont(16);
     message.textOpacity = 0.8;
     config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
     Script.complete();
