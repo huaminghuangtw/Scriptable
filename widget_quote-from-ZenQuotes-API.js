@@ -44,7 +44,7 @@ let q = widget.addText(quote.q);
 q.centerAlignText();
 q.textColor = Color.white();
 // http://iosfonts.com
-q.font = new Font("IowanOldStyle-BoldItalic", 20);
+q.font = new Font("IowanOldStyle-BoldItalic", 22);
 q.minimumScaleFactor = 0.1;
 q.textOpacity = 1;
 
@@ -55,7 +55,7 @@ let a = widget.addText(quote.a);
 a.centerAlignText();
 a.textColor = Color.gray();
 // http://iosfonts.com
-a.font = new Font("Avenir Next", 12);
+a.font = new Font("Avenir Next", 14);
 a.minimumScaleFactor = 0.1;
 a.textOpacity = 0.8;
 
