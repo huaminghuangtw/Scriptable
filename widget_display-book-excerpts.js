@@ -42,6 +42,6 @@ widget.url =
         })
     )}`;
 
-config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
+config.runsInWidget ? Script.setWidget(widget) : widget.presentLarge();
 
 Script.complete();
