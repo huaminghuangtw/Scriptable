@@ -10,9 +10,9 @@ widget.useDefaultPadding();
 
 let fm = FileManager.iCloud();
 let filePath = fm.bookmarkedPath("book_excerpts.json");
-let bookExcerpts = JSON.parse(fm.readString(filePath))[bookName];
+let bookData = JSON.parse(fm.readString(filePath))[bookName];
 
-let a = widget.addText(bookExcerpts);
+let a = widget.addText(bookData["excerpts"]);
 
 a.centerAlignText();
 a.textColor = Color.white();
@@ -34,13 +34,8 @@ b.textOpacity = 0.8;
 
 widget.url =
     `shortcuts://run-shortcut?` +
-    `name=${encodeURIComponent("Gemini - Generate Content")}&` +
-    `input=${encodeURIComponent(
-        JSON.stringify({
-            prompt: `Please elaborate more on the following passage from the book <${bookName}>. Be brief and keep it short.`,
-            content: bookExcerpts,
-        })
-    )}`;
+    `name=${encodeURIComponent("📥 Add to Inbox")}&` +
+    `input=${encodeURIComponent(bookData["pageContent"])}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentLarge();
 

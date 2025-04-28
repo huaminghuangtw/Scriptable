@@ -40,9 +40,13 @@ if (inputs.triggerDate)
 
 const actions = inputs.actions
     ? JSON.parse(`[${inputs.actions.replace(/\n/g, ",")}]`)
-    : inputs.openURL
-    ? [{ title: "🔗 Open URL", url: inputs.openURL }]
     : [];
+
+if (actions.length === 0 && inputs.openURL) {
+    actions.push({ title: "🔗 Open URL", url: inputs.openURL });
+}
+
+notification.addAction("Open Website", "https://example.com");
 
 actions.forEach((action) => {
     notification.addAction(action.title, action.url);
