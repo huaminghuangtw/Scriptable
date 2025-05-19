@@ -83,13 +83,8 @@ text.textOpacity = 1;
 
 widget.url =
     `shortcuts://run-shortcut?` +
-    `name=${encodeURIComponent("_Text2Speech")}&` +
-    `input=${encodeURIComponent(
-        JSON.stringify({
-            text: randomQuote,
-            language: "EN",
-        })
-    )}`;
+    `name=${encodeURIComponent("📥 Add to Inbox")}&` +
+    `input=${encodeURIComponent(randomQuote)}`;
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
