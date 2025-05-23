@@ -57,13 +57,13 @@ for (let i = 0; i < totalBlocks; i++) {
     if (i === currentBlockIndex) {
         blocks.push("🩷");
     } else if (i === Math.floor(totalBlocks / 4)) {
-        blocks.push("⚪️");
+        blocks.push("◼️");
     } else if (i === Math.floor(totalBlocks / 2)) {
-        blocks.push("⚪️");
+        blocks.push("◼️");
     } else if (i === Math.floor((3 * totalBlocks) / 4)) {
-        blocks.push("⚪️");
+        blocks.push("◼️");
     } else if (i === totalBlocks - 1) {
-        blocks.push("⚪️");
+        blocks.push("◼️");
     } else {
         blocks.push("◼️");
     }
