@@ -46,8 +46,6 @@ if (actions.length === 0 && inputs.openURL) {
     actions.push({ title: "🔗 Open URL", url: inputs.openURL });
 }
 
-notification.addAction("Open Website", "https://example.com");
-
 actions.forEach((action) => {
     notification.addAction(action.title, action.url);
 });

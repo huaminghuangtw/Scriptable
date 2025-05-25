@@ -47,8 +47,6 @@ let currentBlockIndex = Math.floor(currentMinutes / blockDuration);
 
 let blocks = [];
 for (let i = 0; i < totalBlocks; i++) {
-    //blocks.push(i === currentBlockIndex ? "🔲" : "🔳");
-
     // 🍀 The 4 Quarters Rule
     //     “Instead of feeling that you've blown the day and thinking, “I'll get back on track tomorrow,”
     //     try thinking of each day as a set of four quarters: morning, midday, afternoon, evening.
