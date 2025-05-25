@@ -33,13 +33,15 @@ try {
 
 let reminders = JSON.parse(fileContent).reminders;
 
-let randomJournalPrompt = utils.getRandomItem(
+let randomJournalPrompt = utils.convertMarkdownToPlainText(
     utils.getRandomItem(
-        reminders.filter(
-            (r) => r.subtasks && r.subtasks.length > 0 && !r.flagged
-        )
-    ).subtasks
-).name;
+        utils.getRandomItem(
+            reminders.filter(
+                (r) => r.subtasks && r.subtasks.length > 0 && !r.flagged
+            )
+        ).subtasks
+    ).name
+);
 
 let text = widget.addText("“" + randomJournalPrompt + "”");
 
