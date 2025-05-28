@@ -2,66 +2,77 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://github.com/huaminghuangtw/Evergreen-Lists
+const CONFIG = {
+    FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 20 },
+    MINIMUM_SCALE_FACTOR: 0.1,
+    TEXT_OPACITY: 1,
+    TEXT_COLOR: Color.white()
+};
 
-const utils = importModule("utils");
+const Utils = importModule("Utils");
+const Cache = importModule("Cache");
 
-let widget = new ListWidget();
+let cache = new Cache(Script.name());
 
-widget.backgroundColor = Color.black();
-widget.useDefaultPadding();
+let randomJournalPrompt = await cache.getOrFetch(fetchRandomJournalPrompt);
 
-let filename = "💭 Journal Prompt";
-let fileContent;
-
-try {
-    fileContent = await new Request(
-        `https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/${encodeURIComponent(
-            filename
-        )}/${encodeURIComponent(filename)}.json`
-    ).loadString();
-} catch {
-    let fm = FileManager.iCloud();
-    let folderPath = fm.joinPath(
-        fm.bookmarkedPath("Second-Brain"),
-        "EvergreenLists"
-    );
-    let jsonFile = utils
-        .getAllFilesByExtension(folderPath, "json")
-        .find((file) => file.includes(filename));
-    fileContent = fm.readString(jsonFile);
-}
-
-let reminders = JSON.parse(fileContent).reminders;
-
-let randomJournalPrompt = utils.convertMarkdownToPlainText(
-    utils.getRandomItem(
-        utils.getRandomItem(
-            reminders.filter(
-                (r) => r.subtasks && r.subtasks.length > 0 && !r.flagged
-            )
-        ).subtasks
-    ).name
-);
-
-let text = widget.addText("“" + randomJournalPrompt + "”");
-
-text.centerAlignText();
-text.textColor = Color.white();
-// http://iosfonts.com
-text.font = new Font("IowanOldStyle-BoldItalic", 20);
-text.minimumScaleFactor = 0.1;
-text.textOpacity = 1;
-
-widget.url =
-    `shortcuts://run-shortcut?` +
-    `name=${encodeURIComponent("Gemini - Generate Content")}&` +
-    `input=${encodeURIComponent(
-        JSON.stringify({
-            prompt: "If you were in my shoes, how would you answer this question? Get specific and be brief. Use less than 100 words.",
-            content: randomJournalPrompt,
-        })
-    )}`;
+let widget = await createWidget(randomJournalPrompt);
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
 Script.complete();
+
+// ================
+// Helper functions
+// ================
+
+async function fetchRandomJournalPrompt() {
+    let filename = "💭 Journal Prompt";
+    let fileContent;
+    try {
+        fileContent = await new Request(
+            `https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/${encodeURIComponent(filename)}/${encodeURIComponent(filename)}.json`
+        ).loadString();
+    } catch {
+        let fm = FileManager.iCloud();
+        let folderPath = fm.joinPath(
+            fm.bookmarkedPath("Second-Brain"),
+            "EvergreenLists"
+        );
+        let jsonFile = Utils
+            .getAllFilesByExtension(folderPath, "json")
+            .find((file) => file.includes(filename));
+        fileContent = fm.readString(jsonFile);
+    }
+    let reminders = JSON.parse(fileContent).reminders;
+    let randomJournalPrompt = Utils.convertMarkdownToPlainText(
+        Utils.getRandomItem(
+            Utils.getRandomItem(
+                reminders.filter(
+                    (r) => r.subtasks && r.subtasks.length > 0 && !r.flagged
+                )
+            ).subtasks
+        ).name
+    );
+    return randomJournalPrompt;
+}
+
+async function createWidget(randomJournalPrompt) {
+    let widget = new ListWidget();
+    let text = widget.addText("“" + randomJournalPrompt + "”");
+    text.centerAlignText();
+    text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
+    text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
+    text.textOpacity = CONFIG.TEXT_OPACITY;
+    text.textColor = CONFIG.TEXT_COLOR;
+    widget.url =
+        `shortcuts://run-shortcut?` +
+        `name=${encodeURIComponent("Gemini - Generate Content")}&` +
+        `input=${encodeURIComponent(
+            JSON.stringify({
+                prompt: "If you were in my shoes, how would you answer this question? Get specific and be brief. Use less than 100 words.",
+                content: randomJournalPrompt,
+            })
+        )}`;
+    return widget;
+}

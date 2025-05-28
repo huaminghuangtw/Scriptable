@@ -1,68 +1,29 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
-let widget = new ListWidget();
+const CONFIG = {
+    QUOTE: {
+        FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 22 },
+        MINIMUM_SCALE_FACTOR: 0.1,
+        TEXT_OPACITY: 1,
+        TEXT_COLOR: Color.white()
+    },
+    AUTHOR: {
+        FONT: { NAME: "Avenir Next", SIZE: 14 },
+        MINIMUM_SCALE_FACTOR: 0.1,
+        TEXT_OPACITY: 0.8,
+        TEXT_COLOR: Color.gray()
+    },
+    SPACER: 15,
+};
 
-widget.backgroundColor = Color.black();
-widget.useDefaultPadding();
+const Cache = importModule('Cache');
 
-const cacheKey = "cachedQuote";
-const cacheDurationMinutes = 1440;
+let cache = new Cache(Script.name());
 
-// Load cache
-let cachedData = Keychain.contains(cacheKey)
-    ? JSON.parse(Keychain.get(cacheKey))
-    : null;
+let quote = await cache.getOrFetch(fetchQuote);
 
-let quote = null;
-
-if (await isConnectedToInternet()) {
-    if (isCacheUsable(cachedData)) {
-        // Use cached quote if still valid
-        quote = cachedData.quote;
-    } else {
-        // Fetch new quote if online and cache is invalid
-        quote = await fetchQuote();
-        // Cache the new quote and expiry date
-        Keychain.set(
-            cacheKey,
-            JSON.stringify({
-                quote: quote,
-                expiry: new Date(
-                    Date.now() + cacheDurationMinutes * 60 * 1000
-                ).toISOString(),
-            })
-        );
-    }
-} else {
-    // Use cached quote if offline
-    quote = cachedData.quote;
-}
-
-let q = widget.addText(quote.q);
-
-q.centerAlignText();
-q.textColor = Color.white();
-// http://iosfonts.com
-q.font = new Font("IowanOldStyle-BoldItalic", 22);
-q.minimumScaleFactor = 0.1;
-q.textOpacity = 1;
-
-widget.addSpacer(15);
-
-let a = widget.addText(quote.a);
-
-a.centerAlignText();
-a.textColor = Color.gray();
-// http://iosfonts.com
-a.font = new Font("Avenir Next", 14);
-a.minimumScaleFactor = 0.1;
-a.textOpacity = 0.8;
-
-widget.url =
-    `shortcuts://run-shortcut?` +
-    `name=${encodeURIComponent("📥 Add to Inbox")}&` +
-    `input=${encodeURIComponent(`“${quote.q.trim()}” — ${quote.a.trim()}`)}`;
+let widget = await createWidget(quote);
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
 
@@ -83,19 +44,29 @@ async function fetchQuote() {
     };
 }
 
-function isCacheValid(expiry) {
-    return expiry.getTime() > new Date().getTime();
-}
+async function createWidget(quote) {
+    let widget = new ListWidget();
 
-function isCacheUsable(cachedData) {
-    return cachedData && isCacheValid(new Date(cachedData.expiry));
-}
+    let q = widget.addText(quote.q);
+    q.centerAlignText();
+    q.font = new Font(CONFIG.QUOTE.FONT.NAME, CONFIG.QUOTE.FONT.SIZE);
+    q.minimumScaleFactor = CONFIG.QUOTE.MINIMUM_SCALE_FACTOR;
+    q.textOpacity = CONFIG.QUOTE.TEXT_OPACITY;
+    q.textColor = CONFIG.QUOTE.TEXT_COLOR;
 
-async function isConnectedToInternet() {
-    try {
-        await new Request("https://www.google.com").load();
-        return true;
-    } catch {
-        return false;
-    }
+    widget.addSpacer(CONFIG.SPACER);
+
+    let a = widget.addText(quote.a);
+    a.centerAlignText();
+    a.font = new Font(CONFIG.AUTHOR.FONT.NAME, CONFIG.AUTHOR.FONT.SIZE);
+    a.minimumScaleFactor = CONFIG.AUTHOR.MINIMUM_SCALE_FACTOR;
+    a.textOpacity = CONFIG.AUTHOR.TEXT_OPACITY;
+    a.textColor = CONFIG.AUTHOR.TEXT_COLOR;
+
+    widget.url =
+        `shortcuts://run-shortcut?` +
+        `name=${encodeURIComponent("📥 Add to Inbox")}&` +
+        `input=${encodeURIComponent(`“${quote.q.trim()}” — ${quote.a.trim()}`)}`;
+
+    return widget;
 }

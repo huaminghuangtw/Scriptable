@@ -1,16 +1,16 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-brown; icon-glyph: toolbox;
-module.exports.getRandomItem = (arr) => {
+function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
-};
+}
 
-module.exports.getRandomItemWithIndex = (arr) => {
+function getRandomItemWithIndex(arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return { item: arr[randomIndex], index: randomIndex };
-};
+}
 
-module.exports.buildObsidianOpenFileURI = (filePath, lineNumber = 1) => {
+function buildObsidianOpenFileURI(filePath, lineNumber = 1) {
     return (
         `obsidian://adv-uri?` +
         `filepath=${encodeURIComponent(filePath)}&` +
@@ -19,9 +19,9 @@ module.exports.buildObsidianOpenFileURI = (filePath, lineNumber = 1) => {
         `line=${lineNumber}&` +
         `commandid=${encodeURIComponent("editor:unfold-all")}`
     );
-};
+}
 
-module.exports.getAllFilesByExtension = (folderPath, fileExtension) => {
+function getAllFilesByExtension(folderPath, fileExtension) {
     let fm = FileManager.iCloud();
     let files = fm.listContents(folderPath);
     let matchedFiles = [];
@@ -31,10 +31,7 @@ module.exports.getAllFilesByExtension = (folderPath, fileExtension) => {
         if (fm.fileExists(fullPath)) {
             if (fm.isDirectory(fullPath)) {
                 matchedFiles = matchedFiles.concat(
-                    module.exports.getAllFilesByExtension(
-                        fullPath,
-                        fileExtension
-                    )
+                    getAllFilesByExtension(fullPath, fileExtension)
                 );
             } else if (file.endsWith(fileExtension)) {
                 matchedFiles.push(fullPath);
@@ -43,9 +40,9 @@ module.exports.getAllFilesByExtension = (folderPath, fileExtension) => {
     });
 
     return matchedFiles;
-};
+}
 
-module.exports.convertMarkdownToPlainText = (markdown) => {
+function convertMarkdownToPlainText(markdown) {
     // Convert headings (e.g., "# Heading" to "Heading")
     markdown = markdown.replace(/(^|\n)#+\s*(.+)/g, "$2");
 
@@ -65,4 +62,12 @@ module.exports.convertMarkdownToPlainText = (markdown) => {
     markdown = markdown.replace(/```[^`]*```/g, "");
 
     return markdown.trim();
+}
+
+module.exports = {
+    getRandomItem,
+    getRandomItemWithIndex,
+    buildObsidianOpenFileURI,
+    getAllFilesByExtension,
+    convertMarkdownToPlainText
 };
