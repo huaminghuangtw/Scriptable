@@ -18,7 +18,7 @@ const CONFIG = {
   SPACER: 15,
 };
 
-const bookName = args.widgetParameters;
+const bookName = args.widgetParameter;
 
 if (!bookName) {
     let w = new ListWidget();
