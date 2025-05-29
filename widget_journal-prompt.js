@@ -3,10 +3,11 @@
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://github.com/huaminghuangtw/Evergreen-Lists
 const CONFIG = {
+    REFRESH_INTERVAL_MINUTES: 1440, // 1 day
     FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 20 },
     MINIMUM_SCALE_FACTOR: 0.1,
     TEXT_OPACITY: 1,
-    TEXT_COLOR: Color.white()
+    TEXT_COLOR: Color.white(),
 };
 
 const Utils = importModule("Utils");
@@ -28,23 +29,15 @@ Script.complete();
 
 async function fetchRandomJournalPrompt() {
     let filename = "💭 Journal Prompt";
-    let fileContent;
-    try {
-        fileContent = await new Request(
-            `https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/${encodeURIComponent(filename)}/${encodeURIComponent(filename)}.json`
-        ).loadString();
-    } catch {
-        let fm = FileManager.iCloud();
-        let folderPath = fm.joinPath(
-            fm.bookmarkedPath("Second-Brain"),
-            "EvergreenLists"
-        );
-        let jsonFile = Utils
-            .getAllFilesByExtension(folderPath, "json")
-            .find((file) => file.includes(filename));
-        fileContent = fm.readString(jsonFile);
-    }
+
+    let fileContent = await new Request(
+        `https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/${encodeURIComponent(
+            filename
+        )}/${encodeURIComponent(filename)}.json`
+    ).loadString();
+
     let reminders = JSON.parse(fileContent).reminders;
+
     let randomJournalPrompt = Utils.convertMarkdownToPlainText(
         Utils.getRandomItem(
             Utils.getRandomItem(
@@ -54,17 +47,20 @@ async function fetchRandomJournalPrompt() {
             ).subtasks
         ).name
     );
+    
     return randomJournalPrompt;
 }
 
 async function createWidget(randomJournalPrompt) {
     let widget = new ListWidget();
+
     let text = widget.addText("“" + randomJournalPrompt + "”");
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
     text.textOpacity = CONFIG.TEXT_OPACITY;
     text.textColor = CONFIG.TEXT_COLOR;
+
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("Gemini - Generate Content")}&` +
@@ -74,5 +70,10 @@ async function createWidget(randomJournalPrompt) {
                 content: randomJournalPrompt,
             })
         )}`;
+
+    widget.refreshAfterDate = new Date(
+        Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000
+    );
+
     return widget;
 }
