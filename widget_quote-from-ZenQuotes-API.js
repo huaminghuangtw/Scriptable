@@ -2,22 +2,23 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 const CONFIG = {
+    REFRESH_INTERVAL_MINUTES: 1440, // 1 day
     QUOTE: {
         FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 22 },
         MINIMUM_SCALE_FACTOR: 0.1,
         TEXT_OPACITY: 1,
-        TEXT_COLOR: Color.white()
+        TEXT_COLOR: Color.white(),
     },
     AUTHOR: {
         FONT: { NAME: "Avenir Next", SIZE: 14 },
         MINIMUM_SCALE_FACTOR: 0.1,
         TEXT_OPACITY: 0.8,
-        TEXT_COLOR: Color.gray()
+        TEXT_COLOR: Color.gray(),
     },
     SPACER: 15,
 };
 
-const Cache = importModule('Cache');
+const Cache = importModule("Cache");
 
 let cache = new Cache(Script.name());
 
@@ -38,6 +39,7 @@ async function fetchQuote() {
     const response = await new Request(
         "https://zenquotes.io/api/random"
     ).loadJSON();
+    
     return {
         q: response[0].q,
         a: response[0].a,
@@ -66,7 +68,13 @@ async function createWidget(quote) {
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("📥 Add to Inbox")}&` +
-        `input=${encodeURIComponent(`“${quote.q.trim()}” — ${quote.a.trim()}`)}`;
+        `input=${encodeURIComponent(
+            `“${quote.q.trim()}” — ${quote.a.trim()}`
+        )}`;
+
+    widget.refreshAfterDate = new Date(
+        Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000
+    );
 
     return widget;
 }

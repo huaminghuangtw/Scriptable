@@ -2,7 +2,6 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 const CONFIG = {
-  ALL_BOOKS_DATA: "book_excerpts.json",
   EXCERPTS: {
     FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 18 },
     MINIMUM_SCALE_FACTOR: 0.1,
@@ -43,18 +42,19 @@ Script.complete();
 async function fetchBookData(bookName) {
   try {
     const fm = FileManager.iCloud();
-    const filePath = fm.bookmarkedPath(CONFIG.ALL_BOOKS_DATA);
+    const filePath = fm.bookmarkedPath("book_excerpts.json");
+    await fm.downloadFileFromiCloud(filePath);
     const allBooks = JSON.parse(fm.readString(filePath));
-    return allBooks[bookName] || { excerpts: "Book not found.", pageContent: "" };
+    return allBooks[bookName];
   } catch (e) {
-    return { excerpts: "Could not load book data.", pageContent: "" };
+    return { excerpts: `Could not load excerpts from ${bookName}.`, pageContent: "" };
   }
 }
 
 async function createWidget(bookName, bookData) {
   let widget = new ListWidget();
 
-  let a = widget.addText(bookData.excerpts || "No excerpt available.");
+  let a = widget.addText(bookData.excerpts);
   a.centerAlignText();
   a.textColor = CONFIG.EXCERPTS.TEXT_COLOR;
   a.font = new Font(CONFIG.EXCERPTS.FONT.NAME, CONFIG.EXCERPTS.FONT.SIZE);

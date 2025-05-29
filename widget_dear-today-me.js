@@ -3,6 +3,7 @@
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://github.com/huaminghuangtw/Dear-Today-Me
 const CONFIG = {
+    REFRESH_INTERVAL_MINUTES: 1440, // 1 day
     FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 18 },
     MINIMUM_SCALE_FACTOR: 0.1,
     TEXT_OPACITY: 1,
@@ -28,37 +29,33 @@ Script.complete();
 
 async function fetchRandomParagraph() {
     let filename = "Dear-Today-Me";
-    let fileContent;
-    try {
-        fileContent = await new Request(
-            `https://raw.githubusercontent.com/huaminghuangtw/${filename}/main/${filename}.md`
-        ).loadString();
-    } catch {
-        let fm = FileManager.iCloud();
-        fileContent = fm.readString(
-            fm.joinPath(
-                fm.bookmarkedPath("Second-Brain"),
-                `${filename}/${filename}.md`
-            )
-        );
-    }
+
+    let fileContent = await new Request(
+        `https://raw.githubusercontent.com/huaminghuangtw/${filename}/main/${filename}.md`
+    ).loadString();
+
     let allParagraphs = fileContent.split("\n\n");
+
     // Skip salutation and closing lines
     let selectedParagraphs = allParagraphs.slice(1, allParagraphs.length - 2);
+
     let randomParagraph = Utils.convertMarkdownToPlainText(
         Utils.getRandomItem(selectedParagraphs)
     );
+    
     return randomParagraph;
 }
 
 async function createWidget(plainTextFromMarkdown) {
     let widget = new ListWidget();
+    
     let text = widget.addText("★ " + plainTextFromMarkdown + " ★");
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
     text.textOpacity = CONFIG.TEXT_OPACITY;
     text.textColor = CONFIG.TEXT_COLOR;
+    
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("_Text2Speech")}&` +
@@ -68,5 +65,10 @@ async function createWidget(plainTextFromMarkdown) {
                 language: "EN",
             })
         )}`;
+
+    widget.refreshAfterDate = new Date(
+        Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000
+    );
+
     return widget;
 }
