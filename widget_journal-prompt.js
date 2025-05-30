@@ -71,9 +71,7 @@ async function createWidget(randomJournalPrompt) {
             })
         )}`;
 
-    widget.refreshAfterDate = new Date(
-        Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000
-    );
+    widget.refreshAfterDate = Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000;
 
     return widget;
 }
