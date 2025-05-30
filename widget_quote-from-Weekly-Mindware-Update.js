@@ -87,9 +87,7 @@ async function createWidget(randomQuote) {
         `name=${encodeURIComponent("📥 Add to Inbox")}&` +
         `input=${encodeURIComponent(randomQuote)}`;
 
-    widget.refreshAfterDate = new Date(
-        Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000
-    );
+    widget.refreshAfterDate = Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000;
 
     return widget;
 }

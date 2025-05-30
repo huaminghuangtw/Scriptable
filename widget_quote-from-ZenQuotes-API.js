@@ -39,7 +39,7 @@ async function fetchQuote() {
     const response = await new Request(
         "https://zenquotes.io/api/random"
     ).loadJSON();
-    
+
     return {
         q: response[0].q,
         a: response[0].a,
@@ -72,9 +72,7 @@ async function createWidget(quote) {
             `“${quote.q.trim()}” — ${quote.a.trim()}`
         )}`;
 
-    widget.refreshAfterDate = new Date(
-        Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000
-    );
+    widget.refreshAfterDate = Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000;
 
     return widget;
 }
