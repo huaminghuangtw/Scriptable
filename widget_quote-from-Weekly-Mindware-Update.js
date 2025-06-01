@@ -3,7 +3,6 @@
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://github.com/huaminghuangtw/Weekly-Mindware-Update
 const CONFIG = {
-    REFRESH_INTERVAL_MINUTES: 1440, // 1 day
     FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 18 },
     MINIMUM_SCALE_FACTOR: 0.1,
     TEXT_OPACITY: 1,
@@ -86,8 +85,6 @@ async function createWidget(randomQuote) {
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("📥 Add to Inbox")}&` +
         `input=${encodeURIComponent(randomQuote)}`;
-
-    widget.refreshAfterDate = Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000;
 
     return widget;
 }

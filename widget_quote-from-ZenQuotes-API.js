@@ -2,7 +2,6 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 const CONFIG = {
-    REFRESH_INTERVAL_MINUTES: 1440, // 1 day
     QUOTE: {
         FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 22 },
         MINIMUM_SCALE_FACTOR: 0.1,
@@ -71,8 +70,6 @@ async function createWidget(quote) {
         `input=${encodeURIComponent(
             `“${quote.q.trim()}” — ${quote.a.trim()}`
         )}`;
-
-    widget.refreshAfterDate = Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000;
 
     return widget;
 }

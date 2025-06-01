@@ -3,7 +3,6 @@
 // icon-color: gray; icon-glyph: smile-wink;
 // 📁 https://github.com/huaminghuangtw/Dear-Today-Me
 const CONFIG = {
-    REFRESH_INTERVAL_MINUTES: 1440, // 1 day
     FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 18 },
     MINIMUM_SCALE_FACTOR: 0.1,
     TEXT_OPACITY: 1,
@@ -65,8 +64,6 @@ async function createWidget(plainTextFromMarkdown) {
                 language: "EN",
             })
         )}`;
-
-    widget.refreshAfterDate = Date.now() + CONFIG.REFRESH_INTERVAL_MINUTES * 60 * 1000;
 
     return widget;
 }
