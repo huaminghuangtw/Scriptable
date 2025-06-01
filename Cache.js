@@ -3,16 +3,29 @@
 // icon-color: deep-blue; icon-glyph: magic;
 // ================
 class Cache {
-    constructor(fetchKey) {
+    constructor(fetchKey, cacheExpiresInMinutes = 1440) {
         this.fetchKey = fetchKey;
+        this.cacheExpiresInMinutes = cacheExpiresInMinutes;
     }
 
     get() {
-        return JSON.parse(Keychain.get(this.fetchKey))
+        const cacheObj = Keychain.get(this.fetchKey);
+        if (cacheObj) {
+            return JSON.parse(cacheObj);
+        } else {
+            return null;
+        }
     }
 
     set(data) {
-        Keychain.set(this.fetchKey, JSON.stringify(data));
+        const expires_at = new Date(
+            Date.now() + this.cacheExpiresInMinutes * 60 * 1000
+        );
+        Keychain.set(this.fetchKey, JSON.stringify({ data, expire_at: expires_at }));
+    }
+
+    isCacheValid(cachedData) {
+        return new Date(cachedData.expire_at) > Date.now();
     }
 
     static async isConnectedToInternet() {
@@ -25,13 +38,22 @@ class Cache {
     }
 
     async getOrFetch(fetchFn) {
+        const cacheObj = this.get();
+        if (cacheObj && this.isCacheValid(cacheObj)) {
+            return cacheObj.data;
+        }
         if (await Cache.isConnectedToInternet()) {
-            const newData = await fetchFn();
-            this.set(newData);
-            return newData;
+            try {
+                const newData = await fetchFn();
+                this.set(newData);
+                return newData;
+            } catch (e) {
+                if (cacheObj) return cacheObj.data;
+                throw e;
+            }
         } else {
-            const cachedData = this.get();
-            return cachedData;
+            if (cacheObj) return cacheObj.data;
+            throw new Error("No cached data & internet connection.");
         }
     }
 }
