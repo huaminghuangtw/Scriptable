@@ -75,19 +75,18 @@ function truncateText(text, maxLength = 180) {
 // https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
 async function getRepoTree(repoOwner, repoName) {
     const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/main?recursive=true`;
-    const response = await fetch(url, {
-        headers: {
-            accept: "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28",
-        }
-    });
-    return response.json().tree;
+    let req = new Request(url);
+    req.headers = {
+        accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    };
+    return (await req.loadJSON()).tree;
 }
 
 async function getFileContent(repoOwner, repoName, filePath) {
     let url = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
-    let response = await fetch(url);
-    return response.text();
+    let req = new Request(url);
+    return await req.loadString();
 }
 
 module.exports = {
