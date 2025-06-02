@@ -23,6 +23,10 @@ class Cache {
         Keychain.set(this.fetchKey, JSON.stringify({ data, expire_at: expires_at }));
     }
 
+    contains(key) {
+        return Keychain.contains(key);
+    }
+
     isCacheValid(cachedData) {
         return new Date(cachedData.expire_at) > Date.now();
     }
@@ -37,11 +41,13 @@ class Cache {
     }
 
     async getOrFetch(fetchFn) {
-        const cacheObj = this.get();
-        if (cacheObj && this.isCacheValid(cacheObj)) {
-            return cacheObj.data;
-        }
-        if (await Cache.isConnectedToInternet()) {
+        const hasCache = this.contains(this.fetchKey);
+        let cacheObj = hasCache ? this.get() : null;
+        const isCacheValid = cacheObj && this.isCacheValid(cacheObj);
+        if (isCacheValid) return cacheObj.data;
+
+        const canFetch = await Cache.isConnectedToInternet();
+        if (canFetch) {
             try {
                 const newData = await fetchFn();
                 this.set(newData);
