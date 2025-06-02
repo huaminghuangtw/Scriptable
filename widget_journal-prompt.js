@@ -27,13 +27,11 @@ Script.complete();
 // ================
 
 async function fetchRandomJournalPrompt() {
-    let filename = "💭 Journal Prompt";
-
-    let fileContent = await new Request(
-        `https://raw.githubusercontent.com/huaminghuangtw/Evergreen-Lists/main/${encodeURIComponent(
-            filename
-        )}/${encodeURIComponent(filename)}.json`
-    ).loadString();
+    let fileContent = await await Utils.getFileContent(
+        "huaminghuangtw",
+        "Evergreen-Lists",
+        "💭 Journal Prompt/💭 Journal Prompt.json"
+    );
 
     let reminders = JSON.parse(fileContent).reminders;
 
@@ -53,7 +51,7 @@ async function fetchRandomJournalPrompt() {
 async function createWidget(randomJournalPrompt) {
     let widget = new ListWidget();
 
-    let text = widget.addText("“" + randomJournalPrompt + "”");
+    let text = widget.addText("“" + Utils.truncateText(randomJournalPrompt) + "”");
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;

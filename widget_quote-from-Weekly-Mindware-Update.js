@@ -27,36 +27,17 @@ Script.complete();
 // ================
 
 async function fetchRandomQuote() {
-    const repoOwner = "huaminghuangtw";
-    const repoName = "Weekly-Mindware-Update";
-
-    const headers = {
-        accept: "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-    };
-
-    async function getRepoTree() {
-        let url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/main?recursive=true`;
-        let req = new Request(url);
-        req.headers = headers;
-        let response = await req.loadJSON();
-        return response.tree;
-    }
-
-    async function getFileContent(filePath) {
-        let url = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
-        let req = new Request(url);
-        let content = await req.loadString();
-        return content;
-    }
-
-    let tree = await getRepoTree();
+    let tree = await Utils.getRepoTree("huaminghuangtw", "Weekly-Mindware-Update");
 
     let filePath = Utils.getRandomItem(
         tree.filter((item) => item.path.includes("/"))
     );
 
-    let fileContent = await getFileContent(filePath.path);
+    let fileContent = await Utils.getFileContent(
+        "huaminghuangtw",
+        "Weekly-Mindware-Update",
+        filePath.path
+    );
 
     let sectionContent = fileContent
         .split("\n")
@@ -74,7 +55,7 @@ async function fetchRandomQuote() {
 async function createWidget(randomQuote) {
     let widget = new ListWidget();
 
-    let text = widget.addText(randomQuote);
+    let text = widget.addText(Utils.truncateText(randomQuote));
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;

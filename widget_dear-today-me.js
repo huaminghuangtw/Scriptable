@@ -27,11 +27,11 @@ Script.complete();
 // ================
 
 async function fetchRandomParagraph() {
-    let filename = "Dear-Today-Me";
-
-    let fileContent = await new Request(
-        `https://raw.githubusercontent.com/huaminghuangtw/${filename}/main/${filename}.md`
-    ).loadString();
+    let fileContent = await Utils.getFileContent(
+        "huaminghuangtw",
+        "Dear-Today-Me",
+        "Dear-Today-Me.md"
+    );
 
     let allParagraphs = fileContent.split("\n\n");
 
@@ -48,7 +48,7 @@ async function fetchRandomParagraph() {
 async function createWidget(plainTextFromMarkdown) {
     let widget = new ListWidget();
     
-    let text = widget.addText("★ " + plainTextFromMarkdown + " ★");
+    let text = widget.addText("★ " + Utils.truncateText(plainTextFromMarkdown) + " ★");
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
