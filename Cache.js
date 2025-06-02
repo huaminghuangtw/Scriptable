@@ -58,7 +58,7 @@ class Cache {
             }
         } else {
             if (cacheObj) return cacheObj.data;
-            throw new Error("No cached data & internet connection.");
+            throw Error("No cached data & internet connection.");
         }
     }
 }

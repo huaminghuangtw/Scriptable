@@ -20,11 +20,7 @@ const CONFIG = {
 const bookName = args.widgetParameter;
 
 if (!bookName) {
-    let w = new ListWidget();
-    w.addText("No book selected.");
-    config.runsInWidget ? Script.setWidget(w) : w.presentLarge();
-    Script.complete();
-    return;
+    throw Error("No book selected: args.widgetParameter is missing or empty.");
 }
 
 const bookData = await fetchBookData(bookName);
@@ -47,7 +43,7 @@ async function fetchBookData(bookName) {
     const allBooks = JSON.parse(fm.readString(filePath));
     return allBooks[bookName];
   } catch (e) {
-    return { excerpts: `Could not load excerpts from ${bookName}.`, pageContent: "" };
+    throw Error(`Failed to load excerpts for '${bookName}': ${e}`);
   }
 }
 
