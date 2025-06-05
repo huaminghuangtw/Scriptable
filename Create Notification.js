@@ -12,6 +12,7 @@ notification.identifier = inputs.id
     : "";
 
 if (inputs.threadId) notification.threadIdentifier = inputs.threadId;
+
 notification.title = inputs.title
     .split("\n")
     .map((line) => line.trim())
@@ -20,13 +21,15 @@ notification.title = inputs.title
 
 const textDivider = "──────────────";
 
-notification.subtitle = inputs.subtitle
-    ? `${textDivider}\n${inputs.subtitle
-          .split("\n")
-          .map((line) => line.trim())
-          .filter((line) => line !== "")
-          .join("\n")}\n${textDivider}`
-    : textDivider;
+if (inputs.subtitle) {
+    notification.subtitle = `${inputs.subtitle
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line !== "")
+        .join("\n")}`;
+} else if (inputs.body) {
+    notification.subtitle = textDivider;
+}
 
 if (inputs.body)
     notification.body = inputs.body
@@ -34,7 +37,9 @@ if (inputs.body)
         .map((line) => line.trim())
         .filter((line) => line !== "")
         .join("\n");
+
 if (inputs.openURL) notification.openURL = inputs.openURL;
+
 if (inputs.triggerDate)
     notification.setTriggerDate(new Date(inputs.triggerDate));
 
