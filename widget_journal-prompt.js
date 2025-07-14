@@ -51,22 +51,25 @@ async function fetchRandomJournalPrompt() {
 async function createWidget(randomJournalPrompt) {
     let widget = new ListWidget();
 
-    let text = widget.addText("“" + Utils.truncateText(randomJournalPrompt) + "”");
+    let quoteText;
+    if (Utils.isChinese(randomJournalPrompt)) {
+        quoteText = "「" + Utils.truncateText(randomJournalPrompt) + "」";
+    } else {
+        quoteText = "“" + Utils.truncateText(randomJournalPrompt) + "”";
+    }
+    let text = widget.addText(quoteText);
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
     text.textOpacity = CONFIG.TEXT_OPACITY;
     text.textColor = CONFIG.TEXT_COLOR;
 
+    let prompt = "If you were in my shoes, how would you answer this question? Get specific and be brief. Use less than 100 words." + "\n" + randomJournalPrompt;
+    
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("Gemini - Generate Content")}&` +
-        `input=${encodeURIComponent(
-            JSON.stringify({
-                prompt: "If you were in my shoes, how would you answer this question? Get specific and be brief. Use less than 100 words.",
-                content: randomJournalPrompt,
-            })
-        )}`;
+        `input=${encodeURIComponent(prompt)}`;
 
     return widget;
 }

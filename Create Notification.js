@@ -22,21 +22,20 @@ notification.title = inputs.title
 const textDivider = "──────────────";
 
 if (inputs.subtitle) {
-    notification.subtitle = `${inputs.subtitle
+    notification.subtitle = `${textDivider}\n${inputs.subtitle
         .split("\n")
         .map((line) => line.trim())
         .filter((line) => line !== "")
-        .join("\n")}`;
+        .join("\n")}\n${textDivider}`;
 } else if (inputs.body) {
     notification.subtitle = textDivider;
 }
 
 if (inputs.body)
-    notification.body = inputs.body
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((line) => line !== "")
-        .join("\n");
+    notification.body = inputs.body.split("\n")
+           .map((line) => line.trim())
+           .filter((line) => line !== "")
+           .join("\n")
 
 if (inputs.openURL) notification.openURL = inputs.openURL;
 
