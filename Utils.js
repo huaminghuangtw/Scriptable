@@ -89,6 +89,10 @@ async function getFileContent(repoOwner, repoName, filePath) {
     return await req.loadString();
 }
 
+function isChinese(text) {
+    return /[\u4e00-\u9fff]/.test(text);
+}
+
 module.exports = {
     getRandomItem,
     getRandomItemWithIndex,
@@ -98,4 +102,5 @@ module.exports = {
     truncateText,
     getRepoTree,
     getFileContent,
+    isChinese
 };
