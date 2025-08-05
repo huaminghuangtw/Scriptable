@@ -27,15 +27,16 @@ Script.complete();
 // ================
 
 async function fetchRandomQuote() {
-    let tree = await Utils.getRepoTree("huaminghuangtw", "Weekly-Mindware-Update");
-
-    let filePath = Utils.getRandomItem(
-        tree.filter((item) => item.path.includes("/"))
+    let tree = await Utils.getRepoTree(
+        "huaminghuangtw",
+        "Weekly-Mindware-Update/issues"
     );
+
+    let filePath = Utils.getRandomItem(tree);
 
     let fileContent = await Utils.getFileContent(
         "huaminghuangtw",
-        "Weekly-Mindware-Update",
+        "Weekly-Mindware-Update/issues",
         filePath.path
     );
 
@@ -62,6 +63,7 @@ async function createWidget(randomQuote) {
     text.textOpacity = CONFIG.TEXT_OPACITY;
     text.textColor = CONFIG.TEXT_COLOR;
 
+    // 👉 Download this shortcut: https://shortcutomation.com/gallery/second-brain/add-to-inbox
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("📥 Add to Inbox")}&` +
