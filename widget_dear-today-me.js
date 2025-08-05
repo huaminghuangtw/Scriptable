@@ -55,6 +55,7 @@ async function createWidget(plainTextFromMarkdown) {
     text.textOpacity = CONFIG.TEXT_OPACITY;
     text.textColor = CONFIG.TEXT_COLOR;
     
+    // 👉 Download this shortcut: https://shortcutomation.com/gallery/audio/text2speech
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("_Text2Speech")}&` +
