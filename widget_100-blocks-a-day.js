@@ -74,10 +74,13 @@ async function createWidget() {
 
     let text = widget.addText(blocks.join(" "));
     text.centerAlignText();
+    
+    // 👉 Download this shortcut: https://shortcutomation.com/gallery/getting-things-done/show-day-progress
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("Show Day Progress")}`;
-    return widget;
+    
+        return widget;
 }
 
 let widget = await createWidget();
