@@ -65,7 +65,8 @@ async function createWidget(bookName, bookData) {
   b.font = new Font(CONFIG.BOOK_NAME.FONT.NAME, CONFIG.BOOK_NAME.FONT.SIZE);
   b.minimumScaleFactor = CONFIG.BOOK_NAME.MINIMUM_SCALE_FACTOR;
   b.textOpacity = CONFIG.BOOK_NAME.TEXT_OPACITY;
-
+  
+  // 👉 Download this shortcut: https://shortcutomation.com/gallery/second-brain/add-to-inbox
   widget.url =
     `shortcuts://run-shortcut?` +
     `name=${encodeURIComponent("📥 Add to Inbox")}&` +
