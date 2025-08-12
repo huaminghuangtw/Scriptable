@@ -27,17 +27,21 @@ Script.complete();
 // ================
 
 async function fetchRandomQuote() {
-    let tree = await Utils.getRepoTree(
+    let files = await Utils.getRepoTree(
         "huaminghuangtw",
-        "Weekly-Mindware-Update/issues"
+        "Weekly-Mindware-Update"
     );
 
-    let filePath = Utils.getRandomItem(tree);
+    let filePath = Utils.getRandomItem(
+        files.filter(
+            (f) => f.path.includes("issues") && f.path.endsWith(".md")
+        )
+    ).path;
 
     let fileContent = await Utils.getFileContent(
         "huaminghuangtw",
-        "Weekly-Mindware-Update/issues",
-        filePath.path
+        "Weekly-Mindware-Update",
+        filePath
     );
 
     let sectionContent = fileContent
