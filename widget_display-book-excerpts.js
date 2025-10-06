@@ -17,15 +17,12 @@ const CONFIG = {
   SPACER: 15,
 };
 
-const bookName = args.widgetParameter;
+const allBooksData = await fetchAllBooksData();
+const bookNames = Object.keys(allBooksData);
+const randomBookName = bookNames[Math.floor(Math.random() * bookNames.length)];
+const bookData = allBooksData[randomBookName];
 
-if (!bookName) {
-    throw Error("No book selected: args.widgetParameter is missing or empty.");
-}
-
-const bookData = await fetchBookData(bookName);
-
-const widget = await createWidget(bookName, bookData);
+const widget = await createWidget(randomBookName, bookData);
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentLarge();
 
@@ -35,15 +32,15 @@ Script.complete();
 // Helper functions
 // ================
 
-async function fetchBookData(bookName) {
+async function fetchAllBooksData() {
   try {
     const fm = FileManager.iCloud();
     const filePath = fm.bookmarkedPath("book_excerpts.json");
     await fm.downloadFileFromiCloud(filePath);
     const allBooks = JSON.parse(fm.readString(filePath));
-    return allBooks[bookName];
+    return allBooks;
   } catch (e) {
-    throw Error(`Failed to load excerpts for '${bookName}': ${e}`);
+    throw Error(`Failed to load book excerpts: ${e}`);
   }
 }
 
