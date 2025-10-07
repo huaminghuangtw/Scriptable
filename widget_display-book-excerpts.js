@@ -2,6 +2,7 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 const CONFIG = {
+  FILE_NAME: "book_excerpts.json",
   EXCERPTS: {
     FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 18 },
     MINIMUM_SCALE_FACTOR: 0.1,
@@ -11,7 +12,7 @@ const CONFIG = {
   BOOK_NAME: {
     FONT: { NAME: "IowanOldStyle-Italic", SIZE: 12 },
     MINIMUM_SCALE_FACTOR: 0.1,
-    TEXT_OPACITY: 0.8,
+    TEXT_OPACITY: 0.6,
     TEXT_COLOR: Color.gray(),
   },
   SPACER: 15,
@@ -35,7 +36,10 @@ Script.complete();
 async function fetchAllBooksData() {
   try {
     const fm = FileManager.iCloud();
-    const filePath = fm.bookmarkedPath("book_excerpts.json");
+    const filePath = fm.joinPath(fm.documentsDirectory(), CONFIG.FILE_NAME);
+    if (!fm.fileExists(filePath)) {
+      throw Error(`File not found: ${filePath}`);
+    }
     await fm.downloadFileFromiCloud(filePath);
     const allBooks = JSON.parse(fm.readString(filePath));
     return allBooks;
