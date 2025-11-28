@@ -36,14 +36,17 @@ async function fetchRandomJournalPrompt() {
     let reminders = JSON.parse(fileContent).reminders;
 
     let randomJournalPrompt = Utils.convertMarkdownToPlainText(
+    Utils.getRandomItem(
         Utils.getRandomItem(
-            Utils.getRandomItem(
-                reminders.filter(
-                    (r) => r.subtasks && r.subtasks.length > 0 && !r.flagged
-                )
-            ).subtasks
-        ).name
-    );
+            reminders.filter(
+                (r) =>
+                    r.subtasks &&
+                    r.subtasks.length > 0 &&
+                    ! r.title.includes("Prioritization")
+            )
+        ).subtasks
+    ).name
+);
 
     return randomJournalPrompt;
 }
