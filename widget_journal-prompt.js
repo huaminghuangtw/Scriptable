@@ -53,14 +53,8 @@ async function fetchRandomJournalPrompt() {
 
 async function createWidget(randomJournalPrompt) {
     let widget = new ListWidget();
-
-    let quoteText;
-    if (Utils.isChinese(randomJournalPrompt)) {
-        quoteText = "「" + Utils.truncateText(randomJournalPrompt) + "」";
-    } else {
-        quoteText = "“" + Utils.truncateText(randomJournalPrompt) + "”";
-    }
-    let text = widget.addText(quoteText);
+   
+    let text = widget.addText(Utils.truncateText(randomJournalPrompt));
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
