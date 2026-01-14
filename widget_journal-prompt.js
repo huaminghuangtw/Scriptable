@@ -61,15 +61,5 @@ async function createWidget(randomJournalPrompt) {
     text.textOpacity = CONFIG.TEXT_OPACITY;
     text.textColor = CONFIG.TEXT_COLOR;
 
-    // 👉 Download this shortcut: https://shortcutomation.com/gallery/api-gemini/gemini-generate-content
-    widget.url =
-        `shortcuts://run-shortcut?` +
-        `name=${encodeURIComponent("Gemini - Generate Content")}&` +
-        `input=${encodeURIComponent(
-            "If you were in my shoes, how would you answer this question? Get specific and be brief. Use less than 100 words." +
-                "\n" +
-                randomJournalPrompt
-        )}`;
-
     return widget;
 }
