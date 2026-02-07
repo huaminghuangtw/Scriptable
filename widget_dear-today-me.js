@@ -48,7 +48,7 @@ async function fetchRandomParagraph() {
 async function createWidget(plainTextFromMarkdown) {
     let widget = new ListWidget();
     
-    let text = widget.addText("★ " + Utils.truncateText(plainTextFromMarkdown) + " ★");
+    let text = widget.addText(Utils.truncateText(plainTextFromMarkdown));
     text.centerAlignText();
     text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
     text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
