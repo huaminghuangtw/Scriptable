@@ -55,16 +55,18 @@ async function createWidget(quote) {
     q.textOpacity = CONFIG.QUOTE.TEXT_OPACITY;
     q.textColor = CONFIG.QUOTE.TEXT_COLOR;
 
-    widget.addSpacer(CONFIG.SPACER);
+    if (quote.a !== "Unknown") {
+        widget.addSpacer(CONFIG.SPACER);
 
-    let a = widget.addText(quote.a);
-    a.centerAlignText();
-    a.font = new Font(CONFIG.AUTHOR.FONT.NAME, CONFIG.AUTHOR.FONT.SIZE);
-    a.minimumScaleFactor = CONFIG.AUTHOR.MINIMUM_SCALE_FACTOR;
-    a.textOpacity = CONFIG.AUTHOR.TEXT_OPACITY;
-    a.textColor = CONFIG.AUTHOR.TEXT_COLOR;
+        let a = widget.addText(quote.a);
+        a.centerAlignText();
+        a.font = new Font(CONFIG.AUTHOR.FONT.NAME, CONFIG.AUTHOR.FONT.SIZE);
+        a.minimumScaleFactor = CONFIG.AUTHOR.MINIMUM_SCALE_FACTOR;
+        a.textOpacity = CONFIG.AUTHOR.TEXT_OPACITY;
+        a.textColor = CONFIG.AUTHOR.TEXT_COLOR;
+    }
 
-    // 👉 Download this shortcut: https://shortcutomation.com/gallery/second-brain/add-to-inbox
+    // 👉 Download this shortcut: https://shortcutomation.com/add-to-inbox
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("📥 Add to Inbox")}&` +
