@@ -67,7 +67,7 @@ async function createWidget(randomQuote) {
     text.textOpacity = CONFIG.TEXT_OPACITY;
     text.textColor = CONFIG.TEXT_COLOR;
 
-    // 👉 Download this shortcut: https://shortcutomation.com/gallery/second-brain/add-to-inbox
+    // 👉 Download this shortcut: https://shortcutomation.com/add-to-inbox
     widget.url =
         `shortcuts://run-shortcut?` +
         `name=${encodeURIComponent("📥 Add to Inbox")}&` +
