@@ -4,3 +4,4 @@
 # Exception
 !.gitignore
 !.github
+!book_excerpts.json
