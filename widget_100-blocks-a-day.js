@@ -5,7 +5,7 @@
 const CONFIG = {
     startTime: "04:00",
     endTime: "20:30",
-    totalBlocks: 50,
+    totalBlocks: 55,
     block: {
         default: "◼️",
         current: "🩷",
