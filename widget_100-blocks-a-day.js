@@ -41,15 +41,7 @@ async function createWidget() {
     let totalAwakeMinutes = (endTime - startTime) / 60000;
 
     if (currentMinutes < 0 || currentMinutes > totalAwakeMinutes) {
-        let message = widget.addText(
-            currentMinutes < 0
-                ? "☀️ A new day awaits. Time to rise and welcome the day ahead!"
-                : "🌙 The day is done. Time to recharge and prepare for tomorrow!"
-        );
-        message.centerAlignText();
-        message.textColor = new Color(CONFIG.messageColor);
-        message.font = Font.boldSystemFont(CONFIG.messageFontSize);
-        message.textOpacity = CONFIG.messageOpacity;
+        widget.addText("");
         return widget;
     }
 
