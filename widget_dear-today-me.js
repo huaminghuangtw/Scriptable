@@ -30,7 +30,7 @@ async function fetchRandomParagraph() {
     let fileContent = await Utils.getFileContent(
         "huaminghuangtw",
         "Dear-Today-Me",
-        "Dear-Today-Me.md"
+        "index.md"
     );
 
     let allParagraphs = fileContent.split("\n\n");
