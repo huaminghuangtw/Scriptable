@@ -5,22 +5,6 @@ function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function getRandomItemWithIndex(arr) {
-    const randomIndex = Math.floor(Math.random() * arr.length);
-    return { item: arr[randomIndex], index: randomIndex };
-}
-
-function buildObsidianOpenFileURI(filePath, lineNumber = 1) {
-    return (
-        `obsidian://adv-uri?` +
-        `filepath=${encodeURIComponent(filePath)}&` +
-        `viewmode=live&` +
-        `openmode=true&` +
-        `line=${lineNumber}&` +
-        `commandid=${encodeURIComponent("editor:unfold-all")}`
-    );
-}
-
 function getAllFilesByExtension(folderPath, fileExtension) {
     let fm = FileManager.iCloud();
     let files = fm.listContents(folderPath);
@@ -92,7 +76,6 @@ async function getFileContent(repoOwner, repoName, filePath) {
 module.exports = {
     getRandomItem,
     getRandomItemWithIndex,
-    buildObsidianOpenFileURI,
     getAllFilesByExtension,
     convertMarkdownToPlainText,
     truncateText,
