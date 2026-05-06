@@ -75,7 +75,6 @@ async function getFileContent(repoOwner, repoName, filePath) {
 
 module.exports = {
     getRandomItem,
-    getRandomItemWithIndex,
     getAllFilesByExtension,
     convertMarkdownToPlainText,
     truncateText,
