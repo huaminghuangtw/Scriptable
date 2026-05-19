@@ -3,20 +3,9 @@
 // icon-color: gray; icon-glyph: smile-wink;
 // 💡 Inspired by: https://waitbutwhy.com/2016/10/100-blocks-day.html
 const CONFIG = {
-    startTime: "04:00",
+    startTime: "04:30",
     endTime: "20:30",
     totalBlocks: 55,
-    block: {
-        default: "◼️",
-        current: "🩷",
-        quarter1: "◼️",
-        quarter2: "◼️",
-        quarter3: "◼️",
-        quarter4: "◼️"
-    },
-    messageColor: "#A0A0A0",
-    messageFontSize: 16,
-    messageOpacity: 0.8,
 };
 
 async function createWidget() {
@@ -36,7 +25,7 @@ async function createWidget() {
         );
     });
 
-    let totalBlocks = CONFIG.totalBlocks;
+    // 1 minute = 60 seconds = 60000 milliseconds
     let currentMinutes = (now - startTime) / 60000;
     let totalAwakeMinutes = (endTime - startTime) / 60000;
 
@@ -45,22 +34,16 @@ async function createWidget() {
         return widget;
     }
 
-    let blockDuration = totalAwakeMinutes / totalBlocks;
+    let blockDuration = totalAwakeMinutes / CONFIG.totalBlocks;
+    
     let currentBlockIndex = Math.floor(currentMinutes / blockDuration);
+
     let blocks = [];
-    for (let i = 0; i < totalBlocks; i++) {
+    for (let i = 0; i < CONFIG.totalBlocks; i++) {
         if (i === currentBlockIndex) {
-            blocks.push(CONFIG.block.current);
-        } else if (i === Math.floor(totalBlocks / 4)) {
-            blocks.push(CONFIG.block.quarter1);
-        } else if (i === Math.floor(totalBlocks / 2)) {
-            blocks.push(CONFIG.block.quarter2);
-        } else if (i === Math.floor((3 * totalBlocks) / 4)) {
-            blocks.push(CONFIG.block.quarter3);
-        } else if (i === totalBlocks - 1) {
-            blocks.push(CONFIG.block.quarter4);
+            blocks.push("🩷");
         } else {
-            blocks.push(CONFIG.block.default);
+            blocks.push("◼️");
         }
     }
 
