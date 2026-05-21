@@ -5,6 +5,10 @@ function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function getRandomIndex(max) {
+    return Math.floor(Math.random() * max);
+}
+
 function getAllFilesByExtension(folderPath, fileExtension) {
     let fm = FileManager.iCloud();
     let files = fm.listContents(folderPath);
@@ -75,6 +79,7 @@ async function getFileContent(repoOwner, repoName, filePath) {
 
 module.exports = {
     getRandomItem,
+    getRandomIndex,
     getAllFilesByExtension,
     convertMarkdownToPlainText,
     truncateText,
