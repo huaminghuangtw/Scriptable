@@ -2,19 +2,25 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
 const CONFIG = {
-    QUOTE: {
-        FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 22 },
-        MINIMUM_SCALE_FACTOR: 0.1,
-        TEXT_OPACITY: 1,
-        TEXT_COLOR: Color.white(),
+  QUOTE: {
+    FONT: {
+      NAME: "IowanOldStyle-BoldItalic",
+      SIZE: 22,
     },
-    AUTHOR: {
-        FONT: { NAME: "Avenir Next", SIZE: 14 },
-        MINIMUM_SCALE_FACTOR: 0.1,
-        TEXT_OPACITY: 0.8,
-        TEXT_COLOR: Color.gray(),
+    MINIMUM_SCALE_FACTOR: 0.1,
+    TEXT_OPACITY: 1,
+    TEXT_COLOR: Color.white(),
+  },
+  AUTHOR: {
+    FONT: {
+      NAME: "Avenir Next",
+      SIZE: 14,
     },
-    SPACER: 15,
+    MINIMUM_SCALE_FACTOR: 0.1,
+    TEXT_OPACITY: 0.8,
+    TEXT_COLOR: Color.gray(),
+  },
+  SPACER: 15,
 };
 
 const Cache = importModule("Cache");
@@ -35,44 +41,42 @@ Script.complete();
 
 // ZenQuotes API: https://zenquotes.io
 async function fetchQuote() {
-    const response = await new Request(
-        "https://zenquotes.io/api/random"
-    ).loadJSON();
+  const response = await new Request(
+    "https://zenquotes.io/api/random",
+  ).loadJSON();
 
-    return {
-        q: response[0].q,
-        a: response[0].a,
-    };
+  return {
+    q: response[0].q,
+    a: response[0].a,
+  };
 }
 
 async function createWidget(quote) {
-    let widget = new ListWidget();
+  let widget = new ListWidget();
 
-    let q = widget.addText(quote.q);
-    q.centerAlignText();
-    q.font = new Font(CONFIG.QUOTE.FONT.NAME, CONFIG.QUOTE.FONT.SIZE);
-    q.minimumScaleFactor = CONFIG.QUOTE.MINIMUM_SCALE_FACTOR;
-    q.textOpacity = CONFIG.QUOTE.TEXT_OPACITY;
-    q.textColor = CONFIG.QUOTE.TEXT_COLOR;
+  let q = widget.addText(quote.q);
+  q.centerAlignText();
+  q.font = new Font(CONFIG.QUOTE.FONT.NAME, CONFIG.QUOTE.FONT.SIZE);
+  q.minimumScaleFactor = CONFIG.QUOTE.MINIMUM_SCALE_FACTOR;
+  q.textOpacity = CONFIG.QUOTE.TEXT_OPACITY;
+  q.textColor = CONFIG.QUOTE.TEXT_COLOR;
 
-    if (quote.a !== "Unknown") {
-        widget.addSpacer(CONFIG.SPACER);
+  if (quote.a !== "Unknown") {
+    widget.addSpacer(CONFIG.SPACER);
 
-        let a = widget.addText(quote.a);
-        a.centerAlignText();
-        a.font = new Font(CONFIG.AUTHOR.FONT.NAME, CONFIG.AUTHOR.FONT.SIZE);
-        a.minimumScaleFactor = CONFIG.AUTHOR.MINIMUM_SCALE_FACTOR;
-        a.textOpacity = CONFIG.AUTHOR.TEXT_OPACITY;
-        a.textColor = CONFIG.AUTHOR.TEXT_COLOR;
-    }
+    let a = widget.addText(quote.a);
+    a.centerAlignText();
+    a.font = new Font(CONFIG.AUTHOR.FONT.NAME, CONFIG.AUTHOR.FONT.SIZE);
+    a.minimumScaleFactor = CONFIG.AUTHOR.MINIMUM_SCALE_FACTOR;
+    a.textOpacity = CONFIG.AUTHOR.TEXT_OPACITY;
+    a.textColor = CONFIG.AUTHOR.TEXT_COLOR;
+  }
 
-    // 👉 Download this shortcut: https://shortcutomation.com/add-to-inbox
-    widget.url =
-        `shortcuts://run-shortcut?` +
-        `name=${encodeURIComponent("📥 Add to Inbox")}&` +
-        `input=${encodeURIComponent(
-            `“${quote.q.trim()}” — ${quote.a.trim()}`
-        )}`;
+  // 👉 Download this shortcut: https://shortcutomation.com/add-to-inbox
+  widget.url =
+    `shortcuts://run-shortcut?` +
+    `name=${encodeURIComponent("📥 Add to Inbox")}&` +
+    `input=${encodeURIComponent(`“${quote.q.trim()}” — ${quote.a.trim()}`)}`;
 
-    return widget;
+  return widget;
 }
