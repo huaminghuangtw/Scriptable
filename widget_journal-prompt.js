@@ -1,12 +1,15 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: gray; icon-glyph: smile-wink;
-// 📁 https://github.com/huaminghuangtw/Evergreen-Lists
+// 💁‍♂️ https://github.com/huaminghuangtw/Evergreen-Lists
 const CONFIG = {
-    FONT: { NAME: "IowanOldStyle-BoldItalic", SIZE: 20 },
-    MINIMUM_SCALE_FACTOR: 0.1,
-    TEXT_OPACITY: 1,
-    TEXT_COLOR: Color.white(),
+  FONT: {
+    NAME: "IowanOldStyle-BoldItalic",
+    SIZE: 20,
+  },
+  MINIMUM_SCALE_FACTOR: 0.1,
+  TEXT_OPACITY: 1,
+  TEXT_COLOR: Color.white(),
 };
 
 const Utils = importModule("Utils");
@@ -27,38 +30,36 @@ Script.complete();
 // ================
 
 async function fetchRandomJournalPrompt() {
-    let fileContent = await await Utils.getFileContent(
-        "huaminghuangtw",
-        "Evergreen-Lists",
-        "💭 Journal Prompt/💭 Journal Prompt.json"
-    );
+  let fileContent = await await Utils.getFileContent(
+    "huaminghuangtw",
+    "Evergreen-Lists",
+    "journal-prompt/journal-prompt.json",
+  );
 
-    let reminders = JSON.parse(fileContent).reminders;
+  let reminders = JSON.parse(fileContent).reminders;
 
-    let randomJournalPrompt = Utils.convertMarkdownToPlainText(
+  let randomJournalPrompt = Utils.convertMarkdownToPlainText(
     Utils.getRandomItem(
-        Utils.getRandomItem(
-            reminders.filter(
-                (r) =>
-                    r.subtasks.length > 0 &&
-                    ! r.title.includes("Prioritization")
-            )
-        ).subtasks
-    ).name
-);
+      Utils.getRandomItem(
+        reminders.filter(
+          (r) => r.subtasks.length > 0 && !r.title.includes("Prioritization"),
+        ),
+      ).subtasks,
+    ).name,
+  );
 
-    return randomJournalPrompt;
+  return randomJournalPrompt;
 }
 
-async function createWidget(randomJournalPrompt) {
-    let widget = new ListWidget();
-   
-    let text = widget.addText(Utils.truncateText(randomJournalPrompt));
-    text.centerAlignText();
-    text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
-    text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
-    text.textOpacity = CONFIG.TEXT_OPACITY;
-    text.textColor = CONFIG.TEXT_COLOR;
+async function createWidget(t) {
+  let widget = new ListWidget();
 
-    return widget;
+  let text = widget.addText(Utils.truncateText(t));
+  text.centerAlignText();
+  text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
+  text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
+  text.textOpacity = CONFIG.TEXT_OPACITY;
+  text.textColor = CONFIG.TEXT_COLOR;
+
+  return widget;
 }
