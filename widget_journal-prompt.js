@@ -30,7 +30,7 @@ Script.complete();
 // ================
 
 async function fetchRandomJournalPrompt() {
-  let fileContent = await await Utils.getFileContent(
+  let fileContent = await Utils.getFileContent(
     "huaminghuangtw",
     "Evergreen-Lists",
     "journal-prompt/journal-prompt.json",
@@ -42,7 +42,7 @@ async function fetchRandomJournalPrompt() {
     Utils.getRandomItem(
       Utils.getRandomItem(
         reminders.filter(
-          (r) => r.subtasks.length > 0 && !r.title.includes("Prioritization"),
+          (r) => r.subtasks.length > 0 && !r.name.includes("Prioritization"),
         ),
       ).subtasks,
     ).name,
