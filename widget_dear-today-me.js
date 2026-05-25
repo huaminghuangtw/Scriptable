@@ -21,7 +21,7 @@ let randomParagraph = await cache.getOrFetch(fetchRandomParagraph);
 
 let widget = await createWidget(randomParagraph);
 
-config.runsInWidget ? Script.setWidget(widget) : widget.presentMedium();
+config.runsInWidget ? Script.setWidget(widget) : widget.presentLarge();
 
 Script.complete();
 
