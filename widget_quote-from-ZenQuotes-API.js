@@ -39,7 +39,7 @@ Script.complete();
 // Helper functions
 // ================
 
-// ZenQuotes API: https://zenquotes.io
+// https://zenquotes.io
 async function fetchQuote() {
   const response = await new Request(
     "https://zenquotes.io/api/random",
@@ -76,7 +76,11 @@ async function createWidget(quote) {
   widget.url =
     `shortcuts://run-shortcut?` +
     `name=${encodeURIComponent("📥 Add to Inbox")}&` +
-    `input=${encodeURIComponent(`“${quote.q.trim()}” — ${quote.a.trim()}`)}`;
+    `input=${encodeURIComponent(
+      quote.a !== "Unknown"
+        ? `“${quote.q.trim()}” — ${quote.a.trim()}`
+        : `“${quote.q.trim()}”`,
+    )}`;
 
   return widget;
 }
