@@ -37,8 +37,8 @@ async function fetchRandomParagraph() {
   );
   let allParagraphs = fileContent.split("\n\n");
 
-  // Skip salutation and closing lines
-  let selectedParagraphs = allParagraphs.slice(1, allParagraphs.length - 2);
+  // Skip frontmatter, salutation, and closing lines
+  let selectedParagraphs = allParagraphs.slice(2, allParagraphs.length - 2);
 
   let i = Utils.getRandomIndex(selectedParagraphs.length - 1);
   let j = i + 1;
