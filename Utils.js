@@ -9,27 +9,6 @@ function getRandomIndex(max) {
     return Math.floor(Math.random() * max);
 }
 
-function getAllFilesByExtension(folderPath, fileExtension) {
-    let fm = FileManager.iCloud();
-    let files = fm.listContents(folderPath);
-    let matchedFiles = [];
-
-    files.forEach((file) => {
-        let fullPath = fm.joinPath(folderPath, file);
-        if (fm.fileExists(fullPath)) {
-            if (fm.isDirectory(fullPath)) {
-                matchedFiles = matchedFiles.concat(
-                    getAllFilesByExtension(fullPath, fileExtension)
-                );
-            } else if (file.endsWith(fileExtension)) {
-                matchedFiles.push(fullPath);
-            }
-        }
-    });
-
-    return matchedFiles;
-}
-
 function convertMarkdownToPlainText(markdown) {
     // Convert headings (e.g., "# Heading" to "Heading")
     markdown = markdown.replace(/(^|\n)#+\s*(.+)/g, "$2");
@@ -80,7 +59,6 @@ async function getFileContent(repoOwner, repoName, filePath) {
 module.exports = {
     getRandomItem,
     getRandomIndex,
-    getAllFilesByExtension,
     convertMarkdownToPlainText,
     truncateText,
     getRepoTree,
