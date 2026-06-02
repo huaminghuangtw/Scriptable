@@ -35,8 +35,13 @@ async function fetchRandomQuote() {
     "Weekly-Mindware-Update",
   );
 
+  let today = new Date();
+  let df = new DateFormatter();
+  df.dateFormat = "w";
+  let weekNumber = df.string(today);
+
   let filePath = Utils.getRandomItem(
-    files.filter((f) => f.path.includes("issues") && f.path.endsWith(".md")),
+    files.filter((f) => f.path.includes(`w${weekNumber}`) && f.path.endsWith(".md")),
   ).path;
 
   let fileContent = await Utils.getFileContent(
