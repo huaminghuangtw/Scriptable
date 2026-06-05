@@ -24,12 +24,12 @@ const CONFIG = {
   SPACER: 15,
 };
 
-const allBooksData = await fetchAllBooksData();
-const bookNames = Object.keys(allBooksData);
-const randomBookName = bookNames[Math.floor(Math.random() * bookNames.length)];
-const bookData = allBooksData[randomBookName];
+const Utils = importModule("Utils");
 
-const widget = await createWidget(randomBookName, bookData);
+const allBooks = await fetchAllBooks();
+const book = Utils.getRandomItem(Object.keys(allBooks));
+
+const widget = await createWidget(book);
 
 config.runsInWidget ? Script.setWidget(widget) : widget.presentLarge();
 
@@ -39,7 +39,7 @@ Script.complete();
 // Helper functions
 // ================
 
-async function fetchAllBooksData() {
+async function fetchAllBooks() {
   try {
     const fm = FileManager.iCloud();
     const filePath = fm.joinPath(fm.documentsDirectory(), CONFIG.FILE_NAME);
@@ -54,10 +54,10 @@ async function fetchAllBooksData() {
   }
 }
 
-async function createWidget(bookName, bookData) {
+async function createWidget(book) {
   let widget = new ListWidget();
 
-  let a = widget.addText(bookData.excerpts);
+  let a = widget.addText(allBooks[book].excerpts);
   a.centerAlignText();
   a.textColor = CONFIG.EXCERPTS.TEXT_COLOR;
   a.font = new Font(CONFIG.EXCERPTS.FONT.NAME, CONFIG.EXCERPTS.FONT.SIZE);
@@ -66,7 +66,7 @@ async function createWidget(bookName, bookData) {
 
   widget.addSpacer(CONFIG.SPACER);
 
-  let b = widget.addText(`— ${bookName}`);
+  let b = widget.addText(`— ${book}`);
   b.centerAlignText();
   b.textColor = CONFIG.BOOK_NAME.TEXT_COLOR;
   b.font = new Font(CONFIG.BOOK_NAME.FONT.NAME, CONFIG.BOOK_NAME.FONT.SIZE);
@@ -77,7 +77,7 @@ async function createWidget(bookName, bookData) {
   widget.url =
     `shortcuts://run-shortcut?` +
     `name=${encodeURIComponent("📥 Add to Inbox")}&` +
-    `input=${encodeURIComponent(bookData.pageContent)}`;
+    `input=${encodeURIComponent(allBooks[book].pageContent)}`;
 
   return widget;
 }
