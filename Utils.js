@@ -31,14 +31,6 @@ function convertMarkdownToPlainText(markdown) {
     return markdown.trim();
 }
 
-function truncateText(text, maxLength = 180) {
-    if (typeof text !== "string") return text;
-    if (text.length > maxLength) {
-        return text.slice(0, maxLength) + "…";
-    }
-    return text;
-}
-
 // https://docs.github.com/en/rest/git/trees?apiVersion=2022-11-28#get-a-tree
 async function getRepoTree(repoOwner, repoName) {
     const url = `https://api.github.com/repos/${repoOwner}/${repoName}/git/trees/main?recursive=true`;
@@ -60,7 +52,6 @@ module.exports = {
     getRandomItem,
     getRandomIndex,
     convertMarkdownToPlainText,
-    truncateText,
     getRepoTree,
     getFileContent
 };
