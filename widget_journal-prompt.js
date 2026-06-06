@@ -54,7 +54,7 @@ async function fetchRandomJournalPrompt() {
 async function createWidget(t) {
   let widget = new ListWidget();
 
-  let text = widget.addText(Utils.truncateText(t));
+  let text = widget.addText(t);
   text.centerAlignText();
   text.font = new Font(CONFIG.FONT.NAME, CONFIG.FONT.SIZE);
   text.minimumScaleFactor = CONFIG.MINIMUM_SCALE_FACTOR;
