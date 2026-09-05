@@ -11,7 +11,7 @@ notification.identifier = inputs.id
     ? inputs.title
     : "";
 
-if (inputs.threadId) notification.threadIdentifier = inputs.threadId;
+if (inputs.threadID) notification.threadIdentifier = inputs.threadID;
 
 notification.title = inputs.title
     .split("\n")
