@@ -42,18 +42,6 @@ if (inputs.openURL) notification.openURL = inputs.openURL;
 if (inputs.triggerDate)
     notification.setTriggerDate(new Date(inputs.triggerDate));
 
-const actions = inputs.actions
-    ? JSON.parse(`[${inputs.actions.replace(/\n/g, ",")}]`)
-    : [];
-
-if (actions.length === 0 && inputs.openURL) {
-    actions.push({ title: "🔗 Open URL", url: inputs.openURL });
-}
-
-actions.forEach((action) => {
-    notification.addAction(action.title, action.url);
-});
-
 notification.schedule();
 
 Script.complete();
