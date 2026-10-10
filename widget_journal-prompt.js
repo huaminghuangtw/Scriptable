@@ -42,7 +42,7 @@ async function fetchRandomJournalPrompt() {
     Utils.getRandomItem(
       Utils.getRandomItem(
         reminders.filter(
-          (r) => r.subtasks.length > 0 && !r.name.includes("Prioritization"),
+          (r) => r.subtasks.length > 0 && !r.flagged,
         ),
       ).subtasks,
     ).name,
